@@ -11,7 +11,7 @@ module.exports = function(app) {
                 linesToDisplay: data[step].initialLines,
                 step: step,
                 noTyping: data[step].noTyping,
-                baseURL: 'https://neo-wishow.herokuapp.com' || 'http://localhost:3000',
+                baseURL: process.env.BASE_URL || 'http://localhost:3000',
             },
             help: step === 5 ? "64" : "NO HELP",
             withSpy: step === 1
