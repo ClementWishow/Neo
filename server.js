@@ -3,12 +3,12 @@
 // ================================================================
 // get all the tools we need
 // ================================================================
-var express = require('express');
-var bodyParser = require('body-parser')
+const express = require('express');
+const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
-var routes = require('./routes/index.js');
-var port = process.env.PORT || 3000;
-
+const routes = require('./routes/index.js');
+const port = process.env.PORT || 3000;
+const cors = require('cors')
 var app = express();
 
 // ================================================================
@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors())
 // ================================================================
 // setup routes
 // ================================================================
