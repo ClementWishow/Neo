@@ -4,14 +4,13 @@ const data = require('./data.json');
 
 module.exports = function(app) {
     // on charge les données correspondant à l'etape
-    console.log(process.env)
     function getPageData(step) {
         return {
             initialData: {
                 linesToDisplay: data[step].initialLines,
                 step: step,
                 noTyping: data[step].noTyping,
-                baseURL: process.env.baseURL || 'http://localhost:3000',
+                baseURL: 'https://neo-wishow.herokuapp.com' || 'http://localhost:3000',
             },
             help: step === 5 ? "64" : "NO HELP",
             withSpy: step === 1
