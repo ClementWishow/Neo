@@ -6,7 +6,7 @@ var writer = new typeWriter('#typeWriter', initialData.noTyping);
 
 // function envoyant une réponse à la question au back
 async function ping(data) {
-	await fetch('http://localhost:3000/ping/' + initialData.step.toString(), 
+	await fetch('https://neo-wishow.herokuapp.com/ping/' + initialData.step.toString(), 
 	{ 
 		mode: 'no-cors',
 		method: 'POST', 
