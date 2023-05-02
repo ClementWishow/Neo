@@ -4,7 +4,6 @@
 // get all the tools we need
 // ================================================================
 const express = require('express');
-const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const routes = require('./routes/index.js');
 const port = process.env.PORT || 3000;
