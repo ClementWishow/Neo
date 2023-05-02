@@ -1,6 +1,9 @@
 'use strict';
 
-const { createStepTrack } = require('../queries/step.queries');
+const { 
+    createStepTrack, 
+    clickOnFirstPage 
+} = require('../queries/step.queries');
 const data = require('./data.json');
 const baseURL = process.env.BASE_URL || 'http://localhost:3000/'
 
@@ -21,7 +24,11 @@ module.exports = function(app) {
     }
 
     // route premiere page
-    app.get('/', function(req, res) {
+    app.get('/:user', async (req, res) => {
+        const user = req.params.user;
+        if(user !== "favicon.ico"){
+            await clickOnFirstPage(req.params.user);
+        }
         res.render('pages/page', getPageData(0));
     });
 

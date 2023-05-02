@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const stepTracking = Schema ({
   step: Number,
+  page: String
 });
 
 stepTracking.set('timestamps', true);
