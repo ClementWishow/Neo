@@ -4,7 +4,7 @@ const data = require('./data.json');
 
 module.exports = function(app) {
     // on charge les données correspondant à l'etape
-    console.log(process.env)
+    console.log('in route ', process.env)
     function getPageData(step) {
         return {
             initialData: {

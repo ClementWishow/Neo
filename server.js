@@ -23,7 +23,7 @@ app.use(cors({origins: '*'}))
 // ================================================================
 routes(app);
 
-console.log(process.env)
+console.log('in server ', process.env)
 
 // ================================================================
 // start our server
