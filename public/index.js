@@ -5,7 +5,7 @@ var writer = new typeWriter('#typeWriter', initialData.noTyping);
 
 // function envoyant une réponse à la question au back
 async function ping(data) {
-	await fetch(initialData.baseURL + '/ping/' + initialData.step.toString(), 
+	await fetch(initialData.baseURL + 'ping/' + initialData.step.toString(), 
 	{ 
 		method: 'POST', 
 		headers: { 

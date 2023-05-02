@@ -1,17 +1,18 @@
 'use strict';
 
 const data = require('./data.json');
+const baseURL = process.env.BASE_URL || 'http://localhost:3000/'
 
 module.exports = function(app) {
     // on charge les données correspondant à l'etape
-    console.log('in route ', process.env)
+    console.log('in route ', process.env.BASE_URL)
     function getPageData(step) {
         return {
             initialData: {
                 linesToDisplay: data[step].initialLines,
                 step: step,
                 noTyping: data[step].noTyping,
-                baseURL: process.env.BASE_URL || 'http://localhost:3000',
+                baseURL: baseURL
             },
             help: step === 5 ? "64" : "NO HELP",
             withSpy: step === 1
@@ -97,7 +98,7 @@ module.exports = function(app) {
                 var cookieStep = req.cookies['x-key'] ? data.findIndex(elem => elem.key === req.cookies['x-key']) : 0
                 if (cookieStep < 7) {
                     ret.message = "Bien tenté ! Mais non."
-                    ret.redirect = "http://localhost:3000/" + cookieStep.toString();
+                    ret.redirect = baseURL + cookieStep.toString();
                 }
                 else {
                     ret.redirect = "https://meetings.hubspot.com/nbenhouidga"
@@ -110,7 +111,7 @@ module.exports = function(app) {
 
         // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
         if (!ret.redirect && answer) {
-            ret.redirect = allGood ? "http://localhost:3000/" + (step + 1).toString() : null
+            ret.redirect = allGood ? baseURL + (step + 1).toString() : null
         }
 
         // on renvoie le texte à affiché en cherchant dans le JSON
