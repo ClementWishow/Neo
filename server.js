@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors())
+app.use(cors({origins: '*'}))
 // ================================================================
 // setup routes
 // ================================================================
