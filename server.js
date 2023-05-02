@@ -9,6 +9,8 @@ const routes = require('./routes/index.js');
 const port = process.env.PORT || 3000;
 const cors = require('cors')
 var app = express();
+const pass = require('./configuration/mongopass');
+const mongoose = require('mongoose');
 
 // ================================================================
 // setup our express application
@@ -17,7 +19,17 @@ app.use('/public', express.static(process.cwd() + '/public'));
 app.set('view engine', 'ejs');
 app.use(express.json({extended: true, limit: '10mb'}))
 app.use(cookieParser());
-app.use(cors({origins: '*'}))
+app.use(cors({origins: '*'}));
+
+mongoose.connect('mongodb+srv://tech-factory:' + pass.password + '@cluster0.nrbfbgp.mongodb.net/test', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+    }).then(() => {
+        console.log("connexion db OK !")
+    }).catch(err => {
+        console.log(err);
+    }
+);
 // ================================================================
 // setup routes
 // ================================================================

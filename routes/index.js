@@ -1,5 +1,6 @@
 'use strict';
 
+const { createStepTrack } = require('../queries/step.queries');
 const data = require('./data.json');
 const baseURL = process.env.BASE_URL || 'http://localhost:3000/'
 
@@ -59,7 +60,8 @@ module.exports = function(app) {
     }
 
     // route  ping
-    app.post('/ping/:page', (req, res) => {
+    app.post('/ping/:page', async (req, res) => {
+        await createStepTrack(parseInt(req.params.page) || 0);
         // on recupere l'etape et la réponse envoyé par l'internaute
         const step = parseInt(req.params.page) || 0
         var answer = req.body.prompt ? req.body.prompt.toLowerCase() : null
