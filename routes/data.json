@@ -1,0 +1,96 @@
+[
+        {
+            "initialLines": [
+                "Salut.",
+                "Je vois que tu es venu ici pour tester tes capacités.",
+                "Je ne voudrais pas te décourager, mais peu ont réussi à venir à bout de cette série d'épreuves.",
+                "Es-tu sûr d'être à la hauteur ? (oui ou non)"
+            ],
+            "answer": ["oui", "yes"],
+            "wrongAnswer": "Je n'ai pas compris.",
+            "alternateAnswer": "Je comprends. Laisse-moi te réorienter vers un défi à ta mesure.",
+            "goodAnswer":  "Très bien.",
+            "alternateLink": "https://www.google.com/search?q=oui+oui+%C3%A0+la+plage",
+            "key": "XSWbr2AJAx"
+        },
+        {
+            "initialLines": [
+                "Je detecte qu'un espion s'est infiltré dans la page.",
+                "Nous devons nous assurer de ne pas être surveillés.",
+                "Elimine-le."
+            ],
+            "answer": [],
+            "wrongAnswer": "",
+            "goodAnswer": "Bien joué mais restons prudent. Il est peut être encore dans les parages.",
+            "noTyping": true,
+            "key": "yt7vx0N5i0"
+        },
+        {
+            "initialLines": [
+                "Complete cette phrase.",
+                "kill -? -> reload"
+            ],
+            "answer": ["1", "kill -1", "-1"],
+            "wrongAnswer": "Non. Reflechis bien à tes arguments.",
+            "goodAnswer": "Bien joué. J'espere qu'on va parler la même langue toi et moi.",
+            "key": "VfUurkcsWV"
+        },
+        {
+            "initialLines": [
+                "Si je te dis :",
+                "'2' + '2'",
+                "Qu'est ce que tu me réponds ?"
+            ],
+            "answer": ["100", "'d'"],
+            "wrongAnswer": "Aie. On ne parle definitivement pas la même langue.",
+            "alternateAnswer": "Non. Desolé, mon language est de très bas niveau.",
+            "goodAnswer": "On peut enfin communiquer tranquille. ",
+            "key": "tCPwlLpa8M"
+        },
+        {
+            "initialLines": [
+                "Faisons connaissance !",
+                "Est ce que je t'ai dit que j'aimais beaucoup le jaune ?",
+                "Bref. Passons à la question.",
+                "À ton avis, quelle est ma couleur preferé ? (j'adore le jaune)"
+            ],
+            "answer": ["jaune", "yellow"],
+            "wrongAnswer": "Non ce n'est pas le vert que j'aime, c'est le jaune.",
+            "alternateAnswer": "J'ai dit le jaune ! regarde ça ressemble à ça: <div style='color: yellow'>jaune</div>",
+            "goodAnswer": "Bien vu ! Corsons un peu les choses.",
+            "key": "Hg8a7Hze4q"
+        },
+        {
+            "initialLines": [
+                "Question Culture G.",
+                "Quel est le nom du fondateur de Facebook ?"
+            ],
+            "answer": ["mark zuckerberg"],
+            "wrongAnswer": "Elle était facile celle là pourtant. Un problème de clavier peut être ?",
+            "alternateAnswer": "Bon allez je t'aide ça commence par Mark... et ça finit par... Zuckerberg",
+            "goodAnswer": "Je vois que tu es cultivé.",
+            "key": "HxonzgOpaF"
+        },
+        {
+            "initialLines": [
+                "UXVlbCBlc3QgbGUgbm9tIGR1IHByZW1pZXIgb3JkaW5hdGV1ciA/",
+                "J'attends ta réponse."
+            ],
+            "answer": ["eniac"],
+            "wrongAnswer": "Mauvaise réponse. Tu ferais mieux de retourner jouer à la console.",
+            "goodAnswer": "Bravo.",
+            "key": "Tbl7Rq55an"
+
+        },
+        {
+            "initialLines": [
+                "Tu as surmonté toutes les epreuves. Tu fais parti de l'élite.",
+                "Ecris ton nom et ton prénom, puis choisi un créneau pour prendre rendez-vous avec notre Lead-Tech."
+            ],
+            "answer": [],
+            "wrongAnswer": "",
+            "goodAnswer": "Merci. À bientot.",
+            "key": "HFknL1qGXc"
+
+        }
+    ]
