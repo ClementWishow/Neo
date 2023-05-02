@@ -8,6 +8,7 @@ var writer = new typeWriter('#typeWriter', initialData.noTyping);
 async function ping(data) {
 	await fetch('http://localhost:3000/ping/' + initialData.step.toString(), 
 	{ 
+		mode: 'no-cors',
 		method: 'POST', 
 		body: JSON.stringify(data),
 		headers: { "Content-Type": "application/json" }
