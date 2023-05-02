@@ -10,13 +10,14 @@ module.exports = function(app) {
                 linesToDisplay: data[step].initialLines,
                 step: step,
                 noTyping: data[step].noTyping,
+                baseURL: process.env.baseURL || 'http://localhost:3000',
             },
             help: step === 5 ? "64" : "NO HELP",
             withSpy: step === 1
         };
     }
 
-    // route premiere pages
+    // route premiere page
     app.get('/', function(req, res) {
         res.render('pages/page', getPageData(0));
     });
@@ -56,8 +57,7 @@ module.exports = function(app) {
     }
 
     // route  ping
-    app.post('/ping/:page', function(req, res) {
-
+    app.post('/ping/:page', (req, res) => {
         // on recupere l'etape et la réponse envoyé par l'internaute
         const step = parseInt(req.params.page) || 0
         var answer = req.body.prompt ? req.body.prompt.toLowerCase() : null

@@ -16,10 +16,7 @@ var app = express();
 // ================================================================
 app.use('/public', express.static(process.cwd() + '/public'));
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
+app.use(express.json({extended: true, limit: '10mb'}))
 app.use(cookieParser());
 app.use(cors({origins: '*'}))
 // ================================================================

@@ -3,15 +3,15 @@ import typeWriter from './typeWriter.js';
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 var writer = new typeWriter('#typeWriter', initialData.noTyping);
 
-
 // function envoyant une réponse à la question au back
 async function ping(data) {
-	await fetch('https://neo-wishow.herokuapp.com/ping/' + initialData.step.toString(), 
+	await fetch(initialData.baseURL + '/ping/' + initialData.step.toString(), 
 	{ 
-		mode: 'no-cors',
 		method: 'POST', 
-		body: JSON.stringify(data),
-		headers: { "Content-Type": "application/json" }
+		headers: { 
+			'Content-Type': 'application/json'
+		 },
+		 body: JSON.stringify(data),
 	})
 	.then((response) => response.json())
 	.then(async (result) => {
