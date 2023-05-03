@@ -36,7 +36,7 @@ async function ping(data) {
 
 // evenement : l'utilisateur appuie sur une touche
 $(window).on('keydown', function(e) {
-	if (initialData.step === 5 && (e.originalEvent.key === 'b' || e.originalEvent.key === 'b')) {
+	if (initialData.name === 'facebook' && e.originalEvent.key === 'b') {
 		writer.prompt(' ')
 		return
 	}
