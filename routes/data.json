@@ -1,5 +1,6 @@
 [
         {
+            "name": "begin",
             "initialLines": [
                 "Salut.",
                 "Je vois que tu es venu ici pour tester tes capacités.",
@@ -14,6 +15,7 @@
             "key": "XSWbr2AJAx"
         },
         {
+            "name": "spy",
             "initialLines": [
                 "Je detecte qu'un espion s'est infiltré dans la page.",
                 "Nous devons nous assurer de ne pas être surveillés.",
@@ -26,6 +28,7 @@
             "key": "yt7vx0N5i0"
         },
         {
+            "name": "command",
             "initialLines": [
                 "Complete cette phrase.",
                 "kill -? -> reload"
@@ -36,6 +39,7 @@
             "key": "VfUurkcsWV"
         },
         {
+            "name": "addition",
             "initialLines": [
                 "Si je te dis :",
                 "'2' + '2'",
@@ -48,6 +52,7 @@
             "key": "tCPwlLpa8M"
         },
         {
+            "name": "yellow",
             "initialLines": [
                 "Faisons connaissance !",
                 "Est ce que je t'ai dit que j'aimais beaucoup le jaune ?",
@@ -61,6 +66,7 @@
             "key": "Hg8a7Hze4q"
         },
         {
+            "name": "facebook",
             "initialLines": [
                 "Question Culture G.",
                 "Quel est le nom du fondateur de Facebook ?"
@@ -72,6 +78,7 @@
             "key": "HxonzgOpaF"
         },
         {
+            "name": "secretcode",
             "initialLines": [
                 "UXVlbCBlc3QgbGUgbm9tIGR1IHByZW1pZXIgb3JkaW5hdGV1ciA/",
                 "J'attends ta réponse."
@@ -83,6 +90,7 @@
 
         },
         {
+            "name": "end",
             "initialLines": [
                 "Tu as surmonté toutes les epreuves. Tu fais parti de l'élite.",
                 "Ecris ton nom et ton prénom, puis choisi un créneau pour prendre rendez-vous avec notre Lead-Tech."

@@ -30,6 +30,7 @@ mongoose.connect('mongodb+srv://tech-factory:' + pass.password + '@cluster0.nrbf
         console.log(err);
     }
 );
+app.locals.baseURL = process.env.BASE_URL || 'http://localhost:3000/'
 // ================================================================
 // setup routes
 // ================================================================

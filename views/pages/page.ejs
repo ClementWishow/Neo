@@ -33,7 +33,7 @@
     </section>
 
     <!-- Les affichages conditionels -->
-    <% if (initialData.step === 1) { %>
+    <% if (initialData.name === 'spy') { %>
         <pre id="spy">
             ⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀ 
     ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀ 
@@ -57,11 +57,11 @@
         </pre>
     <% } %>
 
-    <% if (initialData.step === 3) { %>
+    <% if (initialData.name === 'addition') { %>
         <script> for(var code = 32; code < 127; code++){var chr = String.fromCharCode(code);var line = chr + "\t" + code + "\t" + code.toString(16).toUpperCase();console.log(line);}</script>
     <% } %>
 
-    <% if (initialData.step === 6) { %>
+    <% if (initialData.name === 'secretcode') { %>
         <script> window.ENCODE = function(string) {return btoa(string)};console.log("ENCODE('Salut ça va ?') = ", ENCODE("Salut ça va ?"));console.log("ENCODE('Java et toi ?') = ", ENCODE("Java et toi ?"))</script>
     <% } %>
     
