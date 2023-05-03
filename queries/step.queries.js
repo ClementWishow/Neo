@@ -6,6 +6,13 @@ let createStepTrack = (step) => {
     }).save();
 }
 
+let clickOnFirstPage = (user) => {
+    return new stepTracking({
+        page: `user ${user} clicked on link`
+    }).save();
+}
+
 module.exports = {
-    createStepTrack
+    createStepTrack,
+    clickOnFirstPage
 }
