@@ -2,10 +2,13 @@
         {
             "name": "begin",
             "initialLines": [
-                "Salut.",
-                "Je vois que tu es venu ici pour tester tes capacités.",
-                "Je ne voudrais pas te décourager, mais peu ont réussi à venir à bout de cette série d'épreuves.",
-                "Es-tu sûr d'être à la hauteur ? (oui ou non)"
+                "Réveille toi Néo.",
+                "Tu es dans la matrice.",
+                "Tu la sens tous les jours... Tout autour de toi...",
+		        "Tu la sens quand on t'envoie des offres d'emplois qui ne te concernent pas.",
+		        "Tu la sens quand on te demande d'accepter des missions où tu n'as pas la possibilité d'exprimer tout ton plein potentiel.",
+                "Veux tu te liberer Néo ?",
+                "Veux tu savoir pourquoi tu es là ?"
             ],
             "answer": ["oui", "yes"],
             "wrongAnswer": "Je n'ai pas compris.",
@@ -17,30 +20,25 @@
         {
             "name": "spy",
             "initialLines": [
-                "Je detecte qu'un espion s'est infiltré dans la page.",
+                "Tu est là Néo parce que tu as un savoir...",
+                "Un savoir que beaucoup convoite.",
+                "D'ailleurs je detecte qu'un espion s'est infiltré dans la page.",
                 "Nous devons nous assurer de ne pas être surveillés.",
                 "Elimine-le."
             ],
             "answer": [],
             "wrongAnswer": "",
-            "goodAnswer": "Bien joué mais restons prudent. Il est peut être encore dans les parages.",
+            "goodAnswer": "Bravo, et bien vu.",
             "noTyping": true,
             "key": "yt7vx0N5i0"
         },
         {
-            "name": "command",
-            "initialLines": [
-                "Complete cette phrase.",
-                "kill -? -> reload"
-            ],
-            "answer": ["1", "kill -1", "-1"],
-            "wrongAnswer": "Non. Reflechis bien à tes arguments.",
-            "goodAnswer": "Bien joué. J'espere qu'on va parler la même langue toi et moi.",
-            "key": "VfUurkcsWV"
-        },
-        {
             "name": "addition",
             "initialLines": [
+                "Mon nom est Morpheus. Je viens d'une communautée de developpeur appelé wishow.",
+                "Nous sommes un groupe de passionés, amené à travailler sur des projets et s'aider pour progresser et avancer dans nos carrieres.",
+                "J'ai le sentiment que tu as ce qu'il faut pour nous rejoindre...",
+                "Voyons voir...",
                 "Si je te dis :",
                 "'2' + '2'",
                 "Qu'est ce que tu me réponds ?"
@@ -92,13 +90,14 @@
         {
             "name": "end",
             "initialLines": [
-                "Tu as surmonté toutes les epreuves. Tu fais parti de l'élite.",
-                "Ecris ton nom et ton prénom, puis choisi un créneau pour prendre rendez-vous avec notre Lead-Tech."
+                "Tu as surmonté toutes les epreuves. Tu as l'air d'être l'élu.",
+                "Je te propose donc deux choix.",
+                "la pillule bleue - Le savoir : Choisi un créneau pour en savoir plus au cours d'un rendez-vous avec notre Lead-Tech.",
+                "la pillule rouge - Le défis : Choisi une techno et suis le lapin blanc"
             ],
-            "answer": [],
-            "wrongAnswer": "",
+            "answer": ["pillule bleue", "pillule rouge", "bleu", "rouge"],
+            "wrongAnswer": "Je n'ai pas compris (bleu ou rouge).",
             "goodAnswer": "Merci. À bientot.",
             "key": "HFknL1qGXc"
-
         }
     ]

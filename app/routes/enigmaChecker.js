@@ -56,21 +56,17 @@ function checkParticularity(stepData, req, ret) {
       }
       break;
     case "end":
-      ret.correct = true;
-      const cookieStep = req.cookies["x-key"]
-        ? data.findIndex((elem) => elem.key === req.cookies["x-key"])
-        : 0;
-      if (cookieStep < data.length - 1) {
-        ret.message = "Bien tenté ! Mais non.";
-        ret.redirect = req.app.locals.baseURL + cookieStep.toString();
-      } else {
-        ret.redirect = "https://meetings.hubspot.com/nbenhouidga";
+      if (ret.correct) {
+          ret.redirect = "https://meetings.hubspot.com/nbenhouidga"
       }
       break;
     default:
-      break;
+        break;
   }
-  return ret;
+  if (prompt === "cheat") {
+      ret.correct = true
+  }
+  return ret
 }
 
 export function checkEnigma(req) {
@@ -91,19 +87,17 @@ export function checkEnigma(req) {
   ret = checkParticularity(stepData, req, ret);
 
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
-  if (!ret.redirect) {
-    ret.redirect = ret.correct
-      ? req.app.locals.baseURL + (step + 1).toString()
-      : null;
-    ret.cookie = data[step + 1].key;
+  if (!ret.redirect && ret.correct) {
+    ret.redirect = req.app.locals.baseURL + (step + 1).toString()
+    ret.cookie = data[step + 1].key
   }
 
   // on renvoie le texte à affiché en cherchant dans le JSON
   if (!ret.message && !req.body.mutation) {
-    ret.message = ret.correct ? stepData.goodAnswer : stepData.wrongAnswer;
-    if (!ret.correct && stepData.alternateAnswer && req.body.try > 1) {
-      ret.message = stepData.alternateAnswer;
-    }
+      ret.message = ret.correct ? stepData.goodAnswer : stepData.wrongAnswer
+      if (!ret.correct && stepData.alternateAnswer && req.body.try > 1) {
+          ret.message = stepData.alternateAnswer
+      }
   }
   return ret;
 }
