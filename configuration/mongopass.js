@@ -1,1 +1,0 @@
-exports.password = "uTLhewpTC12";
