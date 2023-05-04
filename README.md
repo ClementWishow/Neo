@@ -5,6 +5,13 @@ Projet de gamification du recrutement.
 
 Project directory
 ``` bash
+├───app
+│   ├───configuration
+│   ├───controllers
+│   ├───models
+│   ├───queries
+│   ├───routes
+│   │   ├───index
 ├───node_modules
 ├───public
 │   ├───assets
@@ -17,14 +24,15 @@ Project directory
 │   │       ├───layout
 │   │       └───libs
 │   └───images
-├───routes
 └───views
     ├───pages
 ```
 
 # Installation
 ```
+:information_source: node >= 16
+
 git clone https://github.com/ClementWishow/Neo.git
 npm install
-node server 
+npm start 
 ```
