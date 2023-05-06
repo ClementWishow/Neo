@@ -1,0 +1,55 @@
+[
+    {
+        "step": "begin",
+        "scenario": [
+            "Réveille toi Néo.",
+            "Tu es dans la matrice.",
+            "Tu la sens tous les jours... Tout autour de toi...",
+            "Tu la sens quand on t'envoie des offres d'emplois qui ne te concernent pas.",
+            "Tu la sens quand on te demande d'accepter des missions où tu n'as pas la possibilité d'exprimer tout ton plein potentiel.",
+            "Veux tu te liberer Néo ?",
+            "Veux tu savoir pourquoi tu es là ?"
+        ]
+    },
+    {
+        "step": "spy",
+        "scenario": [
+            "Tu est là Néo parce que tu as un savoir...",
+            "Un savoir que beaucoup convoitent."
+        ]
+    },
+    {
+        "step": "addition",
+        "scenario": [
+            "Mon nom est Morpheus. Je viens d'une communautée de developpeur appelé wishow.",
+            "Nous sommes un groupe de passionés, amené à travailler sur des projets et s'aider pour progresser et avancer dans nos carrieres.",
+            "J'ai le sentiment que tu as ce qu'il faut pour nous rejoindre...",
+            "Voyons voir..."
+        ]
+    },
+    {
+        "step": "jaune",
+        "scenario": [
+            "Faisons connaissance !",
+            "Est ce que je t'ai dit que j'aimais beaucoup le jaune ?",
+            "Bref. Passons à la question."
+        ]
+    },
+    {
+        "step": "facebook",
+        "scenario": []
+    },
+    {
+        "step": "secretcode",
+        "scenario": []
+    },
+    {
+        "step": "end",
+        "scenario": [
+            "Tu as surmonté toutes les epreuves. Tu as l'air d'être l'élu.",
+            "Je te propose donc deux choix.",
+            "la pillule bleue - Le savoir : Choisi un créneau pour en savoir plus au cours d'un rendez-vous avec notre Lead-Tech.",
+            "la pillule rouge - Le défis : Choisi une techno et suis le lapin blanc"
+        ]
+    }
+]

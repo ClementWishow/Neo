@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 
 const data = JSON.parse(
-  await readFile(new URL("../data.json", import.meta.url))
+  await readFile(new URL("../enigmes.json", import.meta.url))
 );
 
 // fonction pour checker si l'espion a été eliminé

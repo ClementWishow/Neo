@@ -44,17 +44,18 @@ export default class TypeWriter {
 	
 	// ecrit plusieurs lignes
 	async typeLines(lines) {
+		console.log(lines)
 		if (!lines || lines.length < 1) {
 			return
 		}
-		this.prompting = true
-		this.appendTypeWriterItem();
-		if (!this.speed) {
-			await this.sleep(this.firstDelay)
-		}
-		await this.typeIt(lines[0]);
+		// this.prompting = true
+		// this.appendTypeWriterItem();
+		// if (!this.speed) {
+		// 	await this.sleep(this.firstDelay)
+		// }
+		// await this.typeIt(lines[0]);
 		
-		for (var i = 1; i < lines.length; i++) {
+		for (var i = 0; i < lines.length; i++) {
 			this.prompting = true			
 			this.appendTypeWriterItem();
 			if (!this.speed) {
