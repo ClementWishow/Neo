@@ -1,40 +1,42 @@
-import { createStepTrack } from "../queries/step.queries.js";
 import { readFile } from "fs/promises";
 import { checkEnigma } from "../routes/enigmaChecker.js";
 
-const data = JSON.parse(
-  await readFile(new URL("../data.json", import.meta.url))
+const trames = JSON.parse(
+  await readFile(new URL("../trames.json", import.meta.url))
+);
+const enigmes = JSON.parse(
+  await readFile(new URL("../enigmes.json", import.meta.url))
 );
 
 // on charge les données correspondant à l'etape
 function getPageData(step, url) {
   return {
     initialData: {
-      name: data[step].name,
-      linesToDisplay: data[step].initialLines,
+      name: enigmes[step].name,
+      linesToDisplay: [...trames[step]?.scenario, ...enigmes[step].initialLines],
       step: step,
-      noTyping: data[step].noTyping,
+      noTyping: enigmes[step].noTyping,
       baseURL: url,
     },
   };
 }
 
 export const getFirstPage = async (req, res) => {
-  await createStepTrack(0);
+  //await createStepTrack(0);
   res.render("pages/page", getPageData(0, req.app.locals.baseURL));
 };
 
 export const questionByPage = async (req, res) => {
-  await createStepTrack(parseInt(req.params.page) || 0);
+  //await createStepTrack(parseInt(req.params.page) || 0);
   //on recupere l'etape
   const currentStep = parseInt(req.params.page) || 0;
-  if (currentStep === 0 || currentStep > data.length - 1) {
+  if (currentStep === 0 || currentStep > enigmes.length - 1) {
     res.redirect("/");
     return;
   }
   // ANTI TRICHE : on cheque si le cookie correspondant à l'etape est bien present, sinon on redirige
   const cookieStep = req.cookies["x-key"]
-    ? data.findIndex((elem) => elem.key === req.cookies["x-key"])
+    ? enigmes.findIndex((elem) => elem.key === req.cookies["x-key"])
     : 0;
   if (cookieStep < currentStep) {
     res.redirect("/" + cookieStep.toString());

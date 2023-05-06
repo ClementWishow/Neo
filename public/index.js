@@ -15,10 +15,12 @@ async function ping(data) {
     .then((response) => response.json())
     .then(async (result) => {
       if (result.message) {
+        console.log("message: "+result.message)
         writer.appendTypeWriterItem();
         await writer.typeIt(result.message);
       }
       if (result.redirect) {
+        console.log("redirect: "+result.redirect)
         await sleep(2000);
         window.location = result.redirect;
       } else if (result.message) {
