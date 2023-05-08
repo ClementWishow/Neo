@@ -5,7 +5,7 @@ const writer = new typeWriter("#typeWriter", initialData.noTyping);
 
 // function envoyant une réponse à la question au back
 async function ping(data) {
-  await fetch(initialData.baseURL + "ping/" + initialData.step.toString(), {
+  await fetch(baseURL + "ping", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,7 +20,20 @@ async function ping(data) {
       }
       if (result.redirect) {
         await sleep(2000);
-        window.location = result.redirect;
+        if (result.redirect === 'next') {
+          if (result.nextData.additionalHTML) {
+            $('body').append(result.nextData.additionalHTML)
+          }
+          if (result.nextData.additionalJS) {
+            eval(result.nextData.additionalJS);
+          }
+          writer.reload()
+          writer.noTyping = result.nextData.noTyping
+          writer.typeLines(result.nextData.initialLines)
+        }
+        else {
+          window.location = result.redirect;
+        }
       } else if (result.message) {
         writer.appendTypeWriterItem();
         writer.canPrompt = true;
@@ -80,5 +93,5 @@ const config = {
   childList: true,
 };
 
-await writer.typeLines(initialData.linesToDisplay);
+await writer.typeLines(initialData.initialLines);
 observer.observe(document.body, config);

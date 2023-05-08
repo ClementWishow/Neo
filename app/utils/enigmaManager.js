@@ -1,8 +1,45 @@
 import { readFile } from "fs/promises";
+import { readFileSync } from "fs";
 
 const data = JSON.parse(
   await readFile(new URL("../data.json", import.meta.url))
 );
+
+
+function getMultipleRandom(arr, num) {
+  const shuffled = [...arr].sort(() => 0.5 - Math.random());
+
+  return shuffled.slice(0, num);
+}
+
+
+export function createEnigmaPath() {
+  const easy = getMultipleRandom(data.filter(x => x.difficulty === 'easy'), 3).map(x => x.name)
+  const medium = getMultipleRandom(data.filter(x => x.difficulty === 'medium'), 3).map(x => x.name)
+  const hard = getMultipleRandom(data.filter(x => x.difficulty === 'hard'), 3).map(x => x.name)
+  return ['begin', ...easy, ...medium, ...hard, 'end']
+}
+
+
+
+export function getEnigmaData(name) {
+  const enigma = data.find(x => x.name === name)
+  if (!enigma) {
+    return null
+  }
+  const ret = {
+    initialLines: enigma.initialLines,
+    noTyping: !!enigma.noTyping,
+    name: enigma.name,
+  }
+  if (enigma.additionalHTML) {
+    ret.additionalHTML = readFileSync(enigma.additionalHTML).toString()
+  }
+  if (enigma.additionalJS) {
+    ret.additionalJS = readFileSync(enigma.additionalJS).toString()
+  }
+  return ret
+}
 
 // fonction pour checker si l'espion a été eliminé
 function checkSpyElimination(mutation) {
@@ -69,9 +106,9 @@ function checkParticularity(stepData, req, ret) {
   return ret
 }
 
-export function checkEnigma(req) {
-  const step = parseInt(req.params.page) || 0;
-  const stepData = data[step];
+export function checkEnigma(name, req) {
+  const stepData = data.find(x => x.name === name)
+  // const step = parseInt(req.params.page) || 0;
   const prompt = req.body.prompt ? req.body.prompt.toLowerCase() : null;
   let ret = {
     message: "",
@@ -88,8 +125,7 @@ export function checkEnigma(req) {
 
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {
-    ret.redirect = req.app.locals.baseURL + (step + 1).toString()
-    ret.cookie = data[step + 1].key
+    ret.redirect = "next"
   }
 
   // on renvoie le texte à affiché en cherchant dans le JSON

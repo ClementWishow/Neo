@@ -68,6 +68,11 @@ export default class TypeWriter {
 		this.speed = false
 	}
 
+	reload() {
+		this.promptNumber = 0
+		this.selector[0].replaceChildren();
+		this.canPrompt = true
+	}
 
 	// gestion du prompt de l'utilisateur
 	prompt(input) {
@@ -96,7 +101,7 @@ export default class TypeWriter {
 			}
 		}
 		else if (this.canPrompt && !this.prompting && !this.noTyping) {
-			if (input) {
+			if (input &&  $(this.elmt + ' span.typewriter-item:last-child')) {
 				var currentPrompt = $(this.elmt + ' span.typewriter-item:last-child')[0].innerText
                 if (input === "Backspace" ) {
                     currentPrompt =  currentPrompt.substring(0, currentPrompt.length - 1)
