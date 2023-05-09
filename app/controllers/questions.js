@@ -7,10 +7,13 @@ const data = JSON.parse(
   await readFile(new URL("../data.json", import.meta.url))
 );
 
+const trame = JSON.parse(
+  await readFile(new URL("../trame.json", import.meta.url))
+);
 
 export const getFirstPage = async (req, res) => {
   const cookie = req.cookies["x-key"]
-  let stepName = 'one'
+  let stepName = 'begin'
 
   await createStepTrack(0);
   // if (!cookie) {
@@ -41,6 +44,10 @@ export const checkQuestions = (req, res) => {
       steps = ['endform', ...steps]
     }
     ret.nextData = getEnigmaData(steps[0])
+    const index = 9 - steps.length
+    if (index < trame.length && trame[index].length > 0) {
+      ret.nextData.initialLines = [...trame[index], ...ret.nextData.initialLines]   
+    }
     res.cookie('x-key', encrypt(steps.join('-')));
   }
   res.status(201).json(ret);

@@ -6,6 +6,7 @@ const data = JSON.parse(
 );
 
 
+
 function getMultipleRandom(arr, num) {
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
 
@@ -17,7 +18,7 @@ export function createEnigmaPath() {
   const easy = getMultipleRandom(data.filter(x => x.tag === 'easy'), 3).map(x => x.name)
   const medium = getMultipleRandom(data.filter(x => x.tag === 'medium'), 3).map(x => x.name)
   const hard = getMultipleRandom(data.filter(x => x.tag === 'hard'), 3).map(x => x.name)
-  return ['one', ...easy, 'eveille', ...medium, 'agent', ...hard, 'one']
+  return ['begin', ...easy, 'eveille', ...medium, 'agent', ...hard, 'one']
 }
 
 
@@ -41,6 +42,7 @@ export function getEnigmaData(name) {
   if (enigma.blockedLetter) {
     ret.blockedLetter = enigma.blockedLetter
   }
+  console.log(ret.initialLines)
   return ret
 }
 
