@@ -15,7 +15,6 @@ async function ping(data) {
     .then((response) => response.json())
     .then(async (result) => {
       if (result.message) {
-        console.log(result.message)
         writer.appendTypeWriterItem();
         await writer.typeIt(result.message);
       }
