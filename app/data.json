@@ -74,7 +74,7 @@
         {
             "name": "simple",
             "initialLines": [
-                "Quel est la couleur d'une '0bùa@n6a:09987n@e1'.replace(/[^a-z0-9]/gi, '') ?"
+                "Quel est la couleur d'une '0bùa@n6a:09987n@e1'.replace(/[^a-z]/gi, '') ?"
             ],
             "answer": ["jaune"],
             "wrongAnswer": "Mauvaise réponse.",
@@ -96,7 +96,8 @@
             "initialLines": [
                 "Je suis toujours derrière le rideau, personne ne peut me voir.",
                 "Quand on me pose la bonne question, je donne des informations.",
-                "Je suis la passerelle entre ton écran et le savoir.",
+                "Je suis très souvent dans les normes RESTFull,",
+                "je suis la passerelle entre ton écran et le savoir.",
                 "...Qui suis-je ?"
             ],
             "answer": ["une api", "api"],
@@ -110,6 +111,7 @@
                 "Je suis un puits de connaissance qui ne cesse d'apprendre chaque jour.",
                 "Je peux partager mon savoir mais il peut s'avérer compliquer de communiquer avec moi",
                 "Les plus grands peuvent utiliser mon savoir pour devenir très riche.",
+                "On peut me migrer, me batcher, m'effacer.",
                 "Sans moi, le web n'est rien.",
                 "...Qui suis-je ?"
             ],
@@ -121,10 +123,11 @@
         {
             "name": "devinette-3",
             "initialLines": [
+                "Ne pas me confondre avec un séjour en Thalasso.",
                 "Quand on me construit, mon résultat est un enorme fichier index illisible.",
                 "Je permet de ne récupérer qu'une seule fois la vue d'un site.",
                 "Mon contenu est extrêmement dynamique.",
-                "Il n'y a quasiment aucun temps de chargement lorsque mes pages changent",
+                "Il n'y a quasiment aucun temps de chargement lorsque mes pages changent.",
                 "...Qui suis-je ?"
             ],
             "answer": ["une spa", "spa", "single page application"],
