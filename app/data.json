@@ -88,6 +88,7 @@
         {
             "name": "addition",
             "initialLines": [
+                "Verifions si on parle la même langue.",
                 "Si je te dis :",
                 "'2' + '2'",
                 "Qu'est ce que tu me réponds ?"
@@ -95,7 +96,7 @@
             "answer": ["100", "'d'"],
             "wrongAnswer": "Aie. On ne parle definitivement pas la même langue.",
             "otherWrongs": ["Non. Desolé, mon language est de très bas niveau."],
-            "goodAnswer": "On peut enfin communiquer tranquille. ",
+            "goodAnswer": "Super ! On va pouvoir communiquer tranquille. ",
             "tag": "hard",
             "additionalJS": "app/utils/enigmaFiles/additionHint.js"
         },
