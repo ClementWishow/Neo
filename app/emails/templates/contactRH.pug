@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    p candidature de #{candidatName}
+    if(candidatMail)
+        p joignable à l'adresse #{candidatMail}
+    if(candidatTel)
+        p joignable au numéro #{candidatTel}
+    if(candidatStack)
+        p stack technique : #{candidatStack}
+    if(remuneration)
+        p sRémunération souhaitée : #{remuneration}

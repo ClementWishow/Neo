@@ -10,6 +10,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { password } from "./configuration/mongopass.js";
 import routes from "./routes/index.js";
+import './batchs/emails.js'
 
 const app = express();
 

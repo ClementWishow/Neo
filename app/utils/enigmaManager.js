@@ -1,5 +1,6 @@
 import { readFile } from "fs/promises";
 import { readFileSync } from "fs";
+import { createUser, findUserById, updateUser } from "../queries/sessionUser.queries.js";
 
 const data = JSON.parse(
   await readFile(new URL("../data.json", import.meta.url))
@@ -67,7 +68,7 @@ function checkSpyElimination(mutation) {
   return false;
 }
 
-function checkParticularity(stepData, req, ret) {
+async function checkParticularity(stepData, req, ret) {
   const prompt = req.body.prompt ? req.body.prompt.toLowerCase() : null;
   switch (stepData.name) {
     case "begin":
@@ -107,6 +108,32 @@ function checkParticularity(stepData, req, ret) {
     case "one": 
       stepData =  data.find(x => x.name === 'endform')
     case "endform": 
+      let user;
+      if(req.body.try === 1){
+        user = await createUser(req.body.prompt);
+        //TODO: récupérer le champs user._id et le stocker en cookie "userId"
+      }else {
+        //TODO : récupérer le cookie "userId" et findUserById la value
+        user = await findUserById(Buffer.from('123456').toString('hex'));
+        switch(req.body.try){
+          case 2:
+            user.email = req.body.prompt;
+            break;
+          case 3:
+            user.tel = req.body.prompt;
+            break;
+          case 4:
+            user.stack = req.body.prompt;
+            break;
+          case 5:
+            user.remuneration = req.body.prompt;
+            break;
+          default:
+            break;
+        }
+        user.mailSend = false;
+        user = await updateUser(user);
+      }
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
       if (req.body.try === stepData.alternateAnswer.length) {
         ret.redirect = "https://wishow.io/"
@@ -122,7 +149,7 @@ function checkParticularity(stepData, req, ret) {
   return ret
 }
 
-export function checkEnigma(name, req) {
+export async function checkEnigma(name, req) {
   const stepData = data.find(x => x.name === name)
 
   // const step = parseInt(req.params.page) || 0;
@@ -133,12 +160,10 @@ export function checkEnigma(name, req) {
     cookie: false,
     correct: false,
   };
-
   // on verifie si la réponse est correcte en la comparant au JSON
   ret.correct = stepData.answer.includes(prompt);
-
   // gestion des cas particuliers propres à chaque etapes
-  ret = checkParticularity(stepData, req, ret);
+  ret = await checkParticularity(stepData, req, ret);
 
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {
