@@ -14,10 +14,10 @@ function getMultipleRandom(arr, num) {
 
 
 export function createEnigmaPath() {
-  const easy = getMultipleRandom(data.filter(x => x.difficulty === 'easy'), 3).map(x => x.name)
-  const medium = getMultipleRandom(data.filter(x => x.difficulty === 'medium'), 3).map(x => x.name)
-  const hard = getMultipleRandom(data.filter(x => x.difficulty === 'hard'), 3).map(x => x.name)
-  return ['begin', ...easy, ...medium, ...hard, 'end']
+  const easy = getMultipleRandom(data.filter(x => x.tag === 'easy'), 3).map(x => x.name)
+  const medium = getMultipleRandom(data.filter(x => x.tag === 'medium'), 3).map(x => x.name)
+  const hard = getMultipleRandom(data.filter(x => x.tag === 'hard'), 3).map(x => x.name)
+  return ['one', ...easy, 'eveille', ...medium, 'agent', ...hard, 'one']
 }
 
 
@@ -37,6 +37,9 @@ export function getEnigmaData(name) {
   }
   if (enigma.additionalJS) {
     ret.additionalJS = readFileSync(enigma.additionalJS).toString()
+  }
+  if (enigma.blockedLetter) {
+    ret.blockedLetter = enigma.blockedLetter
   }
   return ret
 }
@@ -92,11 +95,22 @@ function checkParticularity(stepData, req, ret) {
         }
       }
       break;
-    case "end":
-      if (ret.correct) {
-          ret.redirect = "https://meetings.hubspot.com/nbenhouidga"
+    case "eveille":
+    case "agent":
+      if (["bleu", "bleue", "pillule bleue"].includes(prompt) ) {
+        ret.goToForm = true
+        ret.message = stepData.alternateAnswer
       }
       break;
+    case "one": 
+      stepData =  data.find(x => x.name === 'endform')
+    case "endform": 
+      ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
+      if (req.body.try === stepData.alternateAnswer.length) {
+        ret.redirect = "https://wishow.io/"
+      }
+      ret.correct = false
+      break
     default:
         break;
   }
@@ -108,6 +122,7 @@ function checkParticularity(stepData, req, ret) {
 
 export function checkEnigma(name, req) {
   const stepData = data.find(x => x.name === name)
+
   // const step = parseInt(req.params.page) || 0;
   const prompt = req.body.prompt ? req.body.prompt.toLowerCase() : null;
   let ret = {
@@ -130,10 +145,10 @@ export function checkEnigma(name, req) {
 
   // on renvoie le texte à affiché en cherchant dans le JSON
   if (!ret.message && !req.body.mutation) {
-      ret.message = ret.correct ? stepData.goodAnswer : stepData.wrongAnswer
-      if (!ret.correct && stepData.alternateAnswer && req.body.try > 1) {
-          ret.message = stepData.alternateAnswer
-      }
+    ret.message = ret.correct ? stepData.goodAnswer : stepData.wrongAnswer
+    if (!ret.correct && stepData.otherWrongs && req.body.try > 1) {
+        ret.message = stepData.otherWrongs[Math.min(stepData.otherWrongs.length - 1, req.body.try - 2)]
+    }
   }
   return ret;
 }

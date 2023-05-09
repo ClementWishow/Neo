@@ -10,15 +10,15 @@ const data = JSON.parse(
 
 export const getFirstPage = async (req, res) => {
   const cookie = req.cookies["x-key"]
-  let stepName = 'begin'
+  let stepName = 'one'
 
   await createStepTrack(0);
-  if (!cookie) {
+  // if (!cookie) {
     res.cookie("x-key", encrypt(createEnigmaPath().join('-')))
-  }
-  else {
-    stepName = decrypt(req.cookies["x-key"]).split('-')[0]
-  }
+  // }
+  // else {
+  //   stepName = decrypt(req.cookies["x-key"]).split('-')[0]
+  // }
   res.render("pages/page", { initialData: getEnigmaData(stepName), baseURL: req.app.locals.baseURL});
 };
 
@@ -26,7 +26,7 @@ export const getFirstPage = async (req, res) => {
 
 export const checkQuestions = (req, res) => {
   // on recupere l'etape et la réponse envoyé par l'internaute
-  const steps = decrypt(req.cookies["x-key"]).split('-')
+  let steps = decrypt(req.cookies["x-key"]).split('-')
   const result = checkEnigma(steps[0], req);
 
   const ret = {
@@ -37,8 +37,11 @@ export const checkQuestions = (req, res) => {
   // si la reponse est correcte, on ajoute un cookie correspondant à l'etape dans la réponse
   if (result.redirect === 'next') {
     steps.shift()
+    if (result.goToForm) {
+      steps = ['endform', ...steps]
+    }
     ret.nextData = getEnigmaData(steps[0])
-    res.cookie("x-key", encrypt(steps.join('-')));
+    res.cookie('x-key', encrypt(steps.join('-')));
   }
   res.status(201).json(ret);
 };
