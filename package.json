@@ -15,6 +15,9 @@
     "crypto-js": "^4.1.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "mongoose": "^7.1.0"
+    "mongoose": "^7.1.0",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.9.1",
+    "nodemailer-pug-engine": "^2.0.1"
   }
 }

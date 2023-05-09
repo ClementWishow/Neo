@@ -1,0 +1,16 @@
+*{
+ margin: 0;
+ padding: 0;
+}
+
+body {
+    text-align: center;
+    font-size: 20px;
+    background-color: rgb(230, 249, 248);
+    padding: 5%
+}
+
+h1 {
+    padding-left: 1%;
+    padding-top: 2%;
+}

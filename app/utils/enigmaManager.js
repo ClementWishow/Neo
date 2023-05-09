@@ -1,5 +1,6 @@
 import { readFile } from "fs/promises";
 import { readFileSync } from "fs";
+import { createUser, findUserById, updateUser } from "../queries/sessionUser.queries.js";
 
 const data = JSON.parse(
   await readFile(new URL("../data.json", import.meta.url))
@@ -67,7 +68,7 @@ function checkSpyElimination(mutation) {
   return false;
 }
 
-function checkParticularity(stepData, req, ret) {
+async function checkParticularity(stepData, req, ret) {
   const prompt = req.body.prompt ? req.body.prompt.toLowerCase() : null;
   switch (stepData.name) {
     case "begin":
@@ -107,6 +108,29 @@ function checkParticularity(stepData, req, ret) {
     case "one": 
       stepData =  data.find(x => x.name === 'endform')
     case "endform": 
+      let user;
+      if(req.body.try === 1){
+        user = await createUser(req.body.prompt);
+        //TODO: récupérer le champs user._id et le stocker en cookie "userId"
+      }else {
+        //TODO : récupérer le cookie "userId" et findUserById la value
+        user = await findUserById("123456");
+        switch(req.body.try){
+          case 2:
+            user.email = req.body.prompt;
+            break;
+          case 3:
+            user.tel = req.body.prompt;
+            break;
+          case 4:
+            user.stack = req.body.prompt;
+            break;
+          default:
+            break;
+        }
+        user.mailSend = false;
+        user = await updateUser(user);
+      }
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
       if (req.body.try === stepData.alternateAnswer.length) {
         ret.redirect = "https://wishow.io/"
