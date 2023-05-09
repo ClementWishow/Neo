@@ -16,12 +16,12 @@ export const getFirstPage = async (req, res) => {
   let stepName = 'begin'
 
   await createStepTrack(0);
-  // if (!cookie) {
+  if (!cookie) {
     res.cookie("x-key", encrypt(createEnigmaPath().join(';')))
-  // }
-  // else {
-  //   stepName = decrypt(req.cookies["x-key"]).split('-')[0]
-  // }
+  }
+  else {
+    stepName = decrypt(req.cookies["x-key"]).split(';')[0]
+  }
   res.render("pages/page", { initialData: getEnigmaData(stepName), baseURL: req.app.locals.baseURL});
 };
 
