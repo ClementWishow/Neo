@@ -12,6 +12,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "mongoose": "^7.1.0"
