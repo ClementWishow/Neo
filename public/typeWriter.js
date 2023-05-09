@@ -1,11 +1,12 @@
 export default class TypeWriter {
-	constructor(elmt, noTyping=false) {
+	constructor(elmt) {
 		this.elmt = elmt
 		this.selector = $(elmt)
 		this.firstDelay = 1500;
 		this.typingDelay = 20;
 		this.afterLineDelay = 1000;
-		this.noTyping = noTyping
+		this.noTyping = false
+		this.blockedLetter = null
 		this.canPrompt = true
 		this.prompting = false
 		this.promptNumber = 0
@@ -76,6 +77,9 @@ export default class TypeWriter {
 
 	// gestion du prompt de l'utilisateur
 	prompt(input) {
+		if (input.toLowerCase() === this.blockedLetter) {
+			input = ' '
+		}
 		if (input === "Enter") {
 			if (this.prompting) {
 				this.speed = true

@@ -1,7 +1,7 @@
 //initialisation de la console
 import typeWriter from "./typeWriter.js";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const writer = new typeWriter("#typeWriter", initialData.noTyping);
+const writer = new typeWriter("#typeWriter");
 
 // function envoyant une réponse à la question au back
 async function ping(data) {
@@ -28,6 +28,7 @@ async function ping(data) {
             eval(result.nextData.additionalJS);
           }
           writer.reload()
+          writer.blockedLetter = result.nextData.blockedLetter || null
           writer.noTyping = result.nextData.noTyping
           writer.typeLines(result.nextData.initialLines)
         }
@@ -46,10 +47,6 @@ async function ping(data) {
 
 // evenement : l'utilisateur appuie sur une touche
 $(window).on("keydown", function (e) {
-  if (initialData.name === "facebook" && e.originalEvent.key === "b") {
-    writer.prompt(" ");
-    return;
-  }
   const prompt = writer.prompt(e.originalEvent.key);
   if (prompt) {
     writer.canPrompt = false;

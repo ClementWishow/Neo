@@ -29,9 +29,9 @@ function getMultipleRandom(arr, num) {
 
 
 export function createCookiePath() {
-  const easy = getMultipleRandom(data.filter(x => x.difficulty === 'easy'), 3).map(x => x.name)
-  const medium = getMultipleRandom(data.filter(x => x.difficulty === 'medium'), 3).map(x => x.name)
-  const hard = getMultipleRandom(data.filter(x => x.difficulty === 'hard'), 3).map(x => x.name)
+  const easy = getMultipleRandom(data.filter(x => x.tag === 'easy'), 3).map(x => x.name)
+  const medium = getMultipleRandom(data.filter(x => x.tag === 'medium'), 3).map(x => x.name)
+  const hard = getMultipleRandom(data.filter(x => x.tag === 'hard'), 3).map(x => x.name)
   return encrypt('begin' + '-' + easy.join('-') + '-' + medium.join('-') + '-' + hard.join('-') + '-', 'end')
 }
 
