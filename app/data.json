@@ -4,7 +4,7 @@
             "initialLines": [
                 "Réveille toi Néo.",
                 "Tu es dans la matrice.",
-                "Tu la sens tous les jours... Tout autour de toi...",
+                "Tu la sens tous les jours... tout autour de toi...",
 		        "Tu la sens quand on t'envoie des offres d'emplois qui ne te concernent pas.",
 		        "Tu la sens quand on te demande d'accepter des missions où tu n'as pas la possibilité d'exprimer tout ton plein potentiel.",
                 "Veux tu te liberer Néo ?",
@@ -64,12 +64,73 @@
             "answer": [],
             "alternateAnswer": [
                                 "Adresse mail :",
-                                "Numero de téléphone :",
                                 "Ta Stack :",
+                                "Numero de téléphone :",
                                 "Si tu as une rémuneration souhaité, tu peux nous l'indiquer ou mettre X :",
                                 "Merci pour toutes ces infos, nous te tiendrons en contact prochainement !"    
                             ],
             "tag": "scenario"
+        },
+        {
+            "name": "simple",
+            "initialLines": [
+                "Quel est la couleur d'une '0bùa@n6a:09987n@e1'.replace(/[^a-z0-9]/gi, '') ?"
+            ],
+            "answer": ["jaune"],
+            "wrongAnswer": "Mauvaise réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "easy"
+        },
+        {
+            "name": "errorcode",
+            "initialLines": [
+                "Quel est la logique de cette suite de nombre ?  -> [200, 301, 404, 500]"
+            ],
+            "answer": ["http"],
+            "wrongAnswer": "Ce n'est pas ça. Ou peut être que je n'ai pas compris. Sois le plus simple possible dans ta réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "easy"
+        },
+        {
+            "name": "devinette-1",
+            "initialLines": [
+                "Je suis toujours derrière le rideau, personne ne peut me voir.",
+                "Quand on me pose la bonne question, je donne des informations.",
+                "Je suis la passerelle entre ton écran et le savoir.",
+                "...Qui suis-je ?"
+            ],
+            "answer": ["une api", "api"],
+            "wrongAnswer": "Mauvaise réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "devinette"
+        },
+        {
+            "name": "devinette-2",
+            "initialLines": [
+                "Je suis un puits de connaissance qui ne cesse d'apprendre chaque jour.",
+                "Je peux partager mon savoir mais il peut s'avérer compliquer de communiquer avec moi",
+                "Les plus grands peuvent utiliser mon savoir pour devenir très riche.",
+                "Sans moi, le web n'est rien.",
+                "...Qui suis-je ?"
+            ],
+            "answer": ["une base de données", "base de données", "bdd"],
+            "wrongAnswer": "Mauvaise réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "devinette"
+        },
+        {
+            "name": "devinette-3",
+            "initialLines": [
+                "Quand on me construit, mon résultat est un enorme fichier index illisible.",
+                "Je permet de ne récupérer qu'une seule fois la vue d'un site.",
+                "Mon contenu est extrêmement dynamique.",
+                "Il n'y a quasiment aucun temps de chargement lorsque mes pages changent",
+                "...Qui suis-je ?"
+            ],
+            "answer": ["une spa", "spa", "single page application"],
+            "wrongAnswer": "Mauvaise réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "devinette"
         },
         {
             "name": "spy",
@@ -125,7 +186,7 @@
             "otherWrongs": ["Bon allez je t'aide ça commence par Mark... et ça finit par... Zuckerberg"],
             "goodAnswer": "Je vois que tu es cultivé.",
             "blockedLetter": "b",
-            "tag": "easy"
+            "tag": "medium"
         },
         {
             "name": "secretcode",

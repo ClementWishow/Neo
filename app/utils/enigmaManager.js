@@ -1,6 +1,8 @@
 import { readFile } from "fs/promises";
 import { readFileSync } from "fs";
 import { createUser, findUserById, updateUser } from "../queries/sessionUser.queries.js";
+import { encrypt, decrypt } from "./encryptManager.js";
+
 
 const data = JSON.parse(
   await readFile(new URL("../data.json", import.meta.url))
@@ -16,10 +18,11 @@ function getMultipleRandom(arr, num) {
 
 
 export function createEnigmaPath() {
-  const easy = getMultipleRandom(data.filter(x => x.tag === 'easy'), 3).map(x => x.name)
+  const easy = getMultipleRandom(data.filter(x => x.tag === 'easy'), 2).map(x => x.name)
+  const guess = getMultipleRandom(data.filter(x => x.tag === 'devinette'), 1).map(x => x.name)
   const medium = getMultipleRandom(data.filter(x => x.tag === 'medium'), 3).map(x => x.name)
   const hard = getMultipleRandom(data.filter(x => x.tag === 'hard'), 3).map(x => x.name)
-  return ['begin', ...easy, 'eveille', ...medium, 'agent', ...hard, 'one']
+  return ['begin', ...easy, ...guess,'eveille', ...medium, 'agent', ...hard, 'one']
 }
 
 
@@ -32,7 +35,6 @@ export function getEnigmaData(name) {
   const ret = {
     initialLines: enigma.initialLines,
     noTyping: !!enigma.noTyping,
-    name: enigma.name,
   }
   if (enigma.additionalHTML) {
     ret.additionalHTML = readFileSync(enigma.additionalHTML).toString()
@@ -43,7 +45,6 @@ export function getEnigmaData(name) {
   if (enigma.blockedLetter) {
     ret.blockedLetter = enigma.blockedLetter
   }
-  console.log(ret.initialLines)
   return ret
 }
 
@@ -98,6 +99,9 @@ async function checkParticularity(stepData, req, ret) {
         }
       }
       break;
+    case "errorcode":
+      ret.correct = prompt.includes(stepData.answer[0])
+      break;
     case "eveille":
     case "agent":
       if (["bleu", "bleue", "pillule bleue"].includes(prompt) ) {
@@ -107,34 +111,36 @@ async function checkParticularity(stepData, req, ret) {
       break;
     case "one": 
       stepData =  data.find(x => x.name === 'endform')
-    case "endform": 
-      let user;
-      if(req.body.try === 1){
-        user = await createUser(req.body.prompt);
-        //TODO: récupérer le champs user._id et le stocker en cookie "userId"
-      }else {
-        //TODO : récupérer le cookie "userId" et findUserById la value
-        user = await findUserById(Buffer.from('123456').toString('hex'));
-        switch(req.body.try){
-          case 2:
-            user.email = req.body.prompt;
-            break;
-          case 3:
-            user.tel = req.body.prompt;
-            break;
-          case 4:
-            user.stack = req.body.prompt;
-            break;
-          case 5:
-            user.remuneration = req.body.prompt;
-            break;
-          default:
-            break;
-        }
-        user.mailSend = false;
-        user = await updateUser(user);
-      }
+    case "endform":
+      // let user = null
+      // if (req.body.try === 1) {
+      //   user = await createUser(req.body.prompt);
+      //   ret.cookie = encrypt(user._id)
+      // }
+      // else {
+      //   user = await findUserById(decrypt(req.cookies["x-id"]))
+      // }
+      // switch(req.body.try){
+      //   case 2:
+      //     user.email = prompt;
+      //     break;
+      //   case 3:
+      //     user.tel = prompt;
+      //     break;
+      //   case 4:
+      //     user.stack = prompt;
+      //     break;
+      //   case 5:
+      //     user.remuneration = prompt;
+      //     break;
+      //   default:
+      //     break;
+      // }
+      // user.mailSend = false;
+      // user = await updateUser(user);
+
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
+
       if (req.body.try === stepData.alternateAnswer.length) {
         ret.redirect = "https://wishow.io/"
       }
@@ -157,7 +163,7 @@ export async function checkEnigma(name, req) {
   let ret = {
     message: "",
     redirect: null,
-    cookie: false,
+    cookie: null,
     correct: false,
   };
   // on verifie si la réponse est correcte en la comparant au JSON
