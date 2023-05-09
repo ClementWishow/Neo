@@ -7,10 +7,10 @@ import { sendMailToRH } from '../emails/emails_candidat_to_rh.js';
 
 // Every hours at minute 0
 cron.schedule('0 * * * *', async () => {
-    console.log("batch d'envoi des mails candidats aux RH");
+    console.log("batch d'envoi des mails candidats au CTO");
     const users = await getAllUsersToSendToRh();
     users.forEach( async user => {
-        sendMailToRH("mail_du_rh", user);
+        sendMailToRH("olivier.bazin@wishow.io", user);
         user.mailSend = true;
         await updateUser(user);
     })

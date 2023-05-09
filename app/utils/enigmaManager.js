@@ -112,32 +112,32 @@ async function checkParticularity(stepData, req, ret) {
     case "one": 
       stepData =  data.find(x => x.name === 'endform')
     case "endform":
-      // let user = null
-      // if (req.body.try === 1) {
-      //   user = await createUser(req.body.prompt);
-      //   ret.cookie = encrypt(user._id)
-      // }
-      // else {
-      //   user = await findUserById(decrypt(req.cookies["x-id"]))
-      // }
-      // switch(req.body.try){
-      //   case 2:
-      //     user.email = prompt;
-      //     break;
-      //   case 3:
-      //     user.tel = prompt;
-      //     break;
-      //   case 4:
-      //     user.stack = prompt;
-      //     break;
-      //   case 5:
-      //     user.remuneration = prompt;
-      //     break;
-      //   default:
-      //     break;
-      // }
-      // user.mailSend = false;
-      // user = await updateUser(user);
+      let user = null
+      if (req.body.try === 1) {
+        user = await createUser(req.body.prompt);
+        ret.cookie = encrypt(user._id.toString())
+      }
+      else {
+        user = await findUserById(Buffer.from(decrypt(req.cookies["x-id"]).toString('hex')))
+      }
+      switch(req.body.try){
+        case 2:
+          user.email = prompt;
+          break;
+        case 3:
+          user.stack = prompt;
+          break;
+        case 4:
+          user.tel = prompt;
+          break;
+        case 5:
+          user.remuneration = prompt;
+          break;
+        default:
+          break;
+      }
+      user.mailSend = false;
+      user = await updateUser(user);
 
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
 
