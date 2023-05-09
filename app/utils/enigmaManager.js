@@ -114,7 +114,7 @@ async function checkParticularity(stepData, req, ret) {
         //TODO: récupérer le champs user._id et le stocker en cookie "userId"
       }else {
         //TODO : récupérer le cookie "userId" et findUserById la value
-        user = await findUserById("123456");
+        user = await findUserById(Buffer.from('123456').toString('hex'));
         switch(req.body.try){
           case 2:
             user.email = req.body.prompt;
@@ -124,6 +124,9 @@ async function checkParticularity(stepData, req, ret) {
             break;
           case 4:
             user.stack = req.body.prompt;
+            break;
+          case 5:
+            user.remuneration = req.body.prompt;
             break;
           default:
             break;
@@ -146,7 +149,7 @@ async function checkParticularity(stepData, req, ret) {
   return ret
 }
 
-export function checkEnigma(name, req) {
+export async function checkEnigma(name, req) {
   const stepData = data.find(x => x.name === name)
 
   // const step = parseInt(req.params.page) || 0;
@@ -157,12 +160,10 @@ export function checkEnigma(name, req) {
     cookie: false,
     correct: false,
   };
-
   // on verifie si la réponse est correcte en la comparant au JSON
   ret.correct = stepData.answer.includes(prompt);
-
   // gestion des cas particuliers propres à chaque etapes
-  ret = checkParticularity(stepData, req, ret);
+  ret = await checkParticularity(stepData, req, ret);
 
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {

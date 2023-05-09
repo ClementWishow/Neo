@@ -6,6 +6,7 @@ const sessionUser = Schema({
   email: String,
   tel: String,
   stack: String,
+  remuneration: String,
   mailSend: Boolean,
 });
 

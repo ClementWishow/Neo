@@ -27,10 +27,10 @@ export const getFirstPage = async (req, res) => {
 
 
 
-export const checkQuestions = (req, res) => {
+export const checkQuestions = async (req, res) => {
   // on recupere l'etape et la réponse envoyé par l'internaute
   let steps = decrypt(req.cookies["x-key"]).split('-')
-  const result = checkEnigma(steps[0], req);
+  const result = await checkEnigma(steps[0], req);
 
   const ret = {
     message: result.message,

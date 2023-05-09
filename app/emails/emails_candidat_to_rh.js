@@ -37,6 +37,7 @@ export const sendMailToRH = (to, user) => {
     ctx.candidatMail = user.mail;
     ctx.candidatStack = user.stack;
     ctx.candidatTel = user.tel;
+    ctx.remuneration = user.remuneration;
     let options = mailOptions(to, "candidature", 'contactRH', ctx);
 
     transporter.sendMail(options, (error, info) => {
