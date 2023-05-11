@@ -179,6 +179,65 @@
             "tag": "medium"
         },
         {
+            "name": "front",
+            "initialLines": [
+                "Parlons un peu front",
+                "J’ai été crée en fin 2011",
+                "ma première version voit le jour en 2013",
+                "je suis une librairie front-end qui suis-je ?"
+            ],
+            "answer": ["reactjs", "react"],
+            "wrongAnswer": "Mauvaise réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "easy"
+        },
+        {
+            "name": "JS",
+            "initialLines": [
+                "Un peu de JS basique",
+                "En JS puis-je changer le contenu d’un tableau ou d’un objet depuis une const ?"
+            ],
+            "answer": ["oui"],
+            "wrongAnswer": "Mauvaise réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "easy"
+        },
+        {
+            "name": "Ajax",
+            "initialLines": [
+                "Quelle est cette approche/technique qui permet d’envoyer ou de recevoir des données", 
+                "depuis un serveur sans recharger la page ?"
+            ],
+            "answer": ["ajax"],
+            "wrongAnswer": "Mauvaise réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "medium"
+        },
+        {
+            "name": "SQL",
+            "initialLines": [
+                "Parlons d'un autre langage",
+                "Je suis un langage qui me permet de communiquer", 
+                "avec des bases de données relationnelles qui suis-je ?"
+            ],
+            "answer": ["SQL"],
+            "wrongAnswer": "Mauvaise réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "easy"
+        },
+        {
+            "name": "GIT",
+            "initialLines": [
+                "Je suis un système de contrôle de version", 
+                "créer en 2005", 
+                "utiliser par des devs au quotidien qui suis-je ?"
+            ],
+            "answer": ["git"],
+            "wrongAnswer": "Mauvaise réponse.",
+            "goodAnswer": "Bien joué !",
+            "tag": "easy"
+        },
+        {
             "name": "facebook",
             "initialLines": [
                 "Question Culture G.",
