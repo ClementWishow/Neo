@@ -1,12 +1,22 @@
 extends layout
 
 block content
-    p candidature de #{candidatName}
+    div(class="flex")
+        p(class="bold") Candidature
+        p de : #{candidatName}
     if(candidatMail)
-        p joignable à l'adresse #{candidatMail}
+        div(class="flex")
+            p(class="bold") Joignable 
+            p à l'adresse #{candidatMail}
     if(candidatTel)
-        p joignable au numéro #{candidatTel}
+        div(class="flex")
+            p(class="bold") Joignable 
+            p au numéro #{candidatTel}
     if(candidatStack)
-        p stack technique : #{candidatStack}
+        div(class="flex")
+            p(class="bold") Stack
+            p technique : #{candidatStack}
     if(remuneration)
-        p sRémunération souhaitée : #{remuneration}
+        div(class="flex")
+            p(class="bold") Rémunération 
+            p souhaitée : #{remuneration}

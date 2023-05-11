@@ -2,8 +2,6 @@ import sessionUser from "../models/sessionUser.js";
 
 export const createUser = (userName) => {
   return new sessionUser({
-    //TODO : supprimer le champs _id
-    _id: Buffer.from('123456').toString('hex'),
     name: userName
   }).save();
 };

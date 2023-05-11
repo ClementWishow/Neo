@@ -15,7 +15,7 @@ const transporter = nodeMailer.createTransport({
 });
 
 transporter.use('compile', pugEngine({
-    templateDir: process.cwd() + './templates',
+    templateDir: process.cwd() + '/app/emails/templates',
     pretty: true
 }));
 
@@ -34,7 +34,7 @@ let ctx = {
 
 export const sendMailToRH = (to, user) => {
     ctx.candidatName = user.name;
-    ctx.candidatMail = user.mail;
+    ctx.candidatMail = user.email;
     ctx.candidatStack = user.stack;
     ctx.candidatTel = user.tel;
     ctx.remuneration = user.remuneration;
@@ -42,8 +42,8 @@ export const sendMailToRH = (to, user) => {
 
     transporter.sendMail(options, (error, info) => {
         if (error) {
-        console.log(error);
-        return res.status(500).json(error);
+            console.log(error);
+            return res.status(500).json(error);
         }
         console.log('Message %s sent: %s', info.messageId, info.response);
         res.status(200).json(mail_sent_successfully);

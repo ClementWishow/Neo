@@ -14,3 +14,13 @@ h1 {
     padding-left: 1%;
     padding-top: 2%;
 }
+
+.flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.bold{
+    font-weight: 800;
+    margin-right: 5px;
+}
