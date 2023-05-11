@@ -84,7 +84,7 @@
         {
             "name": "errorcode",
             "initialLines": [
-                "Quel est la logique de cette suite de nombre ?  -> [200, 301, 404, 500]"
+                "Quel est le point commun entre ces nombres ?  -> 200, 301, 404, 500"
             ],
             "answer": ["http"],
             "wrongAnswer": "Ce n'est pas ça. Ou peut être que je n'ai pas compris. Sois le plus simple possible dans ta réponse.",
@@ -96,7 +96,8 @@
             "initialLines": [
                 "Je suis toujours derrière le rideau, personne ne peut me voir.",
                 "Quand on me pose la bonne question, je donne des informations.",
-                "Je suis la passerelle entre ton écran et le savoir.",
+                "Je suis très souvent dans les normes RESTFull,",
+                "je suis la passerelle entre ton écran et le savoir.",
                 "...Qui suis-je ?"
             ],
             "answer": ["une api", "api"],
@@ -108,9 +109,10 @@
             "name": "devinette-2",
             "initialLines": [
                 "Je suis un puits de connaissance qui ne cesse d'apprendre chaque jour.",
-                "Je peux partager mon savoir mais il peut s'avérer compliquer de communiquer avec moi",
+                "Je peux partager mon savoir mais il peut s'avérer compliqué de communiquer avec moi",
                 "Les plus grands peuvent utiliser mon savoir pour devenir très riche.",
-                "Sans moi, le web n'est rien.",
+                "On peut me structurer, me migrer, m'effacer,",
+                "sans moi, le web n'est rien.",
                 "...Qui suis-je ?"
             ],
             "answer": ["une base de données", "base de données", "bdd"],
@@ -124,7 +126,8 @@
                 "Quand on me construit, mon résultat est un enorme fichier index illisible.",
                 "Je permet de ne récupérer qu'une seule fois la vue d'un site.",
                 "Mon contenu est extrêmement dynamique.",
-                "Il n'y a quasiment aucun temps de chargement lorsque mes pages changent",
+                "Il n'y a quasiment aucun temps de chargement lorsque mes pages changent.",
+                "Ne pas me confondre avec un lieu relaxant...",
                 "...Qui suis-je ?"
             ],
             "answer": ["une spa", "spa", "single page application"],
