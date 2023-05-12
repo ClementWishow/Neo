@@ -1,27 +1,28 @@
-import { createStepTrack } from "../queries/step.queries.js";
 import { readFile } from "fs/promises";
 import { getEnigmaData, checkEnigma, createEnigmaPath } from "../utils/enigmaManager.js";
 import { encrypt, decrypt } from "../utils/encryptManager.js";
-import ReactGa from 'react-ga';
+import ua from 'universal-analytics';
+const visitor = ua('UA-267692971-1');
 
 const trame = JSON.parse(
   await readFile(new URL("../trame.json", import.meta.url))
 );
-ReactGa.initialize("UA-267692971-1");
 
 export const getFirstPage = async (req, res) => {
   try {
     const cookie = req.cookies["x-key"]
     let stepName = 'begin';
 
-    ReactGa.event({
-      category: "load page",
-      action: "connexion"
+    const journey = createEnigmaPath();
+
+    visitor.event('firstPage', 'connexion', 'begin', journey, (err) => {
+      if (err) {
+        console.error(err);
+      }
     });
       
-    await createStepTrack(0);
     if (!cookie) {
-      res.cookie("x-key", encrypt(createEnigmaPath().join(';')))
+      res.cookie("x-key", encrypt(journey.join(';')))
     }
     else {
       stepName = decrypt(req.cookies["x-key"]).split(';')[0]
@@ -37,9 +38,10 @@ export const checkQuestions = async (req, res) => {
   let steps = decrypt(req.cookies["x-key"]).split(';')
   const result = await checkEnigma(steps[0], req);
 
-  ReactGa.event({
-    category: "step",
-    action: steps[0]
+  visitor.event('response', 'question', 'next', steps[0], (err) => {
+    if (err) {
+      console.error(err);
+    }
   });
 
   const ret = {
