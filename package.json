@@ -18,6 +18,7 @@
     "mongoose": "^7.1.0",
     "node-cron": "^3.0.2",
     "nodemailer": "^6.9.1",
-    "nodemailer-pug-engine": "^2.0.1"
+    "nodemailer-pug-engine": "^2.0.1",
+    "react-ga": "^3.3.1"
   }
 }

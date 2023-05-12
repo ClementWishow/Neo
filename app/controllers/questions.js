@@ -2,35 +2,45 @@ import { createStepTrack } from "../queries/step.queries.js";
 import { readFile } from "fs/promises";
 import { getEnigmaData, checkEnigma, createEnigmaPath } from "../utils/enigmaManager.js";
 import { encrypt, decrypt } from "../utils/encryptManager.js";
-
-const data = JSON.parse(
-  await readFile(new URL("../data.json", import.meta.url))
-);
+import ReactGa from 'react-ga';
 
 const trame = JSON.parse(
   await readFile(new URL("../trame.json", import.meta.url))
 );
+ReactGa.initialize("UA-267692971-1");
 
 export const getFirstPage = async (req, res) => {
-  const cookie = req.cookies["x-key"]
-  let stepName = 'begin'
+  try {
+    const cookie = req.cookies["x-key"]
+    let stepName = 'begin';
 
-  await createStepTrack(0);
-  if (!cookie) {
-    res.cookie("x-key", encrypt(createEnigmaPath().join(';')))
+    ReactGa.event({
+      category: "load page",
+      action: "connexion"
+    });
+      
+    await createStepTrack(0);
+    if (!cookie) {
+      res.cookie("x-key", encrypt(createEnigmaPath().join(';')))
+    }
+    else {
+      stepName = decrypt(req.cookies["x-key"]).split(';')[0]
+    }
+    res.render("pages/page", { initialData: getEnigmaData(stepName), baseURL: req.app.locals.baseURL});
+  }catch(e){
+    res.status(500).json(e);
   }
-  else {
-    stepName = decrypt(req.cookies["x-key"]).split(';')[0]
-  }
-  res.render("pages/page", { initialData: getEnigmaData(stepName), baseURL: req.app.locals.baseURL});
 };
-
-
 
 export const checkQuestions = async (req, res) => {
   // on recupere l'etape et la réponse envoyé par l'internaute
   let steps = decrypt(req.cookies["x-key"]).split(';')
   const result = await checkEnigma(steps[0], req);
+
+  ReactGa.event({
+    category: "step",
+    action: steps[0]
+  });
 
   const ret = {
     message: result.message,
