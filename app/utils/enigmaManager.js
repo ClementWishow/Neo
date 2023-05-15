@@ -27,9 +27,9 @@ export function createEnigmaPath() {
 
   const [easy, guess, medium, hard] = levelEnigmas.map(({ level, num }) =>
     getMultipleRandom(
-      data.filter((x) => x.tag === level),
+      data.filter(({ tag }) => tag === level),
       num
-    ).map((x) => x.name)
+    ).map(({ name }) => name)
   );
 
   return [

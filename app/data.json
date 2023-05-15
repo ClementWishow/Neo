@@ -189,9 +189,9 @@
             "answer": ["reactjs", "react"],
             "wrongAnswer": "Mauvaise réponse.",
             "goodAnswer": "Bien joué !",
-            "tag": "easy"
+            "tag": "devinette"
         },
-        {
+        { 
             "name": "JS",
             "initialLines": [
                 "Un peu de JS basique",
@@ -200,7 +200,7 @@
             "answer": ["oui"],
             "wrongAnswer": "Mauvaise réponse.",
             "goodAnswer": "Bien joué !",
-            "tag": "easy"
+            "tag": "devinette"
         },
         {
             "name": "Ajax",
@@ -211,7 +211,7 @@
             "answer": ["ajax"],
             "wrongAnswer": "Mauvaise réponse.",
             "goodAnswer": "Bien joué !",
-            "tag": "medium"
+            "tag": "devinette"
         },
         {
             "name": "SQL",
@@ -223,7 +223,7 @@
             "answer": ["SQL"],
             "wrongAnswer": "Mauvaise réponse.",
             "goodAnswer": "Bien joué !",
-            "tag": "easy"
+            "tag": "devinette"
         },
         {
             "name": "GIT",
@@ -235,7 +235,7 @@
             "answer": ["git"],
             "wrongAnswer": "Mauvaise réponse.",
             "goodAnswer": "Bien joué !",
-            "tag": "easy"
+            "tag": "devinette"
         },
         {
             "name": "facebook",
