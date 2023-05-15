@@ -11,6 +11,8 @@ cron.schedule('0 * * * *', async () => {
     const users = await getAllUsersToSendToRh();
     users.forEach( async user => {
         sendMailToRH("olivier.bazin@wishow.io", user);
+        sendMailToRH("vincent.darcq@wishow.io", user);
+        sendMailToRH("mike.dorival@wishow.io", user);
         user.mailSend = true;
         await updateUser(user);
     })
