@@ -13,6 +13,7 @@ cron.schedule('0 * * * *', async () => {
         sendMailToRH("olivier.bazin@wishow.io", user);
         sendMailToRH("vincent.darcq@wishow.io", user);
         sendMailToRH("mike.dorival@wishow.io", user);
+        sendMailToRH("nassim.benhouidga@wishow.io", user);
         user.mailSend = true;
         await updateUser(user);
     })
