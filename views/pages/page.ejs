@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-267692971-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      document.addEventListener("turbolinks:load", function(event) {
-        gtag('config', 'UA-267692971-1', {
-          page_location: event.data.url,
-          page_path: event.srcElement.location.pathname,
-          page_title: event.srcElement.title
-        });
-      });
-    </script>
     <meta charset="UTF-8">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
@@ -45,6 +31,17 @@
     <!-- la Console -->
     <section id="typeWriter">
     </section>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQ47MXN6FT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-JQ47MXN6FT');
+    </script>
+
 
     <script>
         var baseURL = <%- JSON.stringify(baseURL) %>;

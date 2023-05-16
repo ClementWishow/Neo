@@ -184,7 +184,7 @@
                 "Question Culture G.",
                 "Quel est le nom du fondateur de Facebook ?"
             ],
-            "answer": ["mark zuckerberg"],
+            "answer": ["mark zuckerberg", "zuckerberg"],
             "wrongAnswer": "Elle était facile celle là pourtant. Un problème de clavier peut être ?",
             "otherWrongs": ["Bon allez je t'aide ça commence par Mark... et ça finit par... Zuckerberg"],
             "goodAnswer": "Je vois que tu es cultivé.",
