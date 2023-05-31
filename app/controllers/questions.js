@@ -1,8 +1,6 @@
 import { readFile } from "fs/promises";
 import { getEnigmaData, checkEnigma, createEnigmaPath } from "../utils/enigmaManager.js";
 import { encrypt, decrypt } from "../utils/encryptManager.js";
-import ua from 'universal-analytics';
-const visitor = ua('UA-267692971-1');
 
 const trame = JSON.parse(
   await readFile(new URL("../trame.json", import.meta.url))
@@ -14,12 +12,6 @@ export const getFirstPage = async (req, res) => {
     let stepName = 'begin';
 
     const journey = createEnigmaPath();
-
-    visitor.event('firstPage', 'connexion', 'begin', journey, (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
       
     if (!cookie) {
       res.cookie("x-key", encrypt(journey.join(';')))
@@ -38,13 +30,7 @@ export const checkQuestions = async (req, res) => {
   let steps = decrypt(req.cookies["x-key"]).split(';')
   const result = await checkEnigma(steps[0], req);
 
-  visitor.event('response', 'question', 'next', steps[0], (err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
-
-  const ret = {
+  let ret = {
     message: result.message,
     redirect: result.redirect,
   }
@@ -54,6 +40,7 @@ export const checkQuestions = async (req, res) => {
   }
   // si la reponse est correcte, on ajoute un cookie correspondant à l'etape dans la réponse
   if (result.redirect === 'next') {
+    ret.successEnigme = steps[0];
     steps.shift()
     if (result.goToForm) {
       steps = ['endform', ...steps]

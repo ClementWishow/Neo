@@ -14,6 +14,12 @@ async function ping(data) {
   })
     .then((response) => response.json())
     .then(async (result) => {
+      if(result.successEnigme && result.successEnigme !== 'begin'){
+        gtag('event', 'énigme_réussie', {
+          'event_category': 'Énigmes',
+          'event_label': result.successEnigme
+        });
+      }
       if (result.message) {
         writer.appendTypeWriterItem();
         await writer.typeIt(result.message);
@@ -89,6 +95,5 @@ const config = {
   subtree: true,
   childList: true,
 };
-
 await writer.typeLines(initialData.initialLines);
 observer.observe(document.body, config);
