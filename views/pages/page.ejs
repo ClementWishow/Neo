@@ -8,29 +8,29 @@
     <title>Neo</title>
 </head>
 <body>
-    <!-- la NavBar -->
-    <div class="navbar">
-        <div class="navbar__content">
-            <a id="wishow">
-                <pre> _    _  _       _                     
-| |  | |(_)     | |                    
-| |  | | _  ___ | |__    ___ __      __
-| |/\| || |/ __|| '_ \  / _ \\ \ /\ / /
-\  /\  /| |\__ \| | | || (_) |\ V  V / 
- \/  \/ |_||___/|_| |_| \___/  \_/\_/  
-                </pre>
-            </a>
-            <div class="btn">
-                <span>
-                Contact
-                </span>
+    <div class="layout">
+        <div class="console">
+            <div class="navbar">
+                <div class="navbar__content">
+                    <a id="wishow">
+                        <img src="/public/images/Wishow.svg" alt="My Happy SVG"/>
+                    </a>
+                    <div class="btn">
+                        <img src="/public/images/Vector.svg" alt="My Happy SVG"/>
+                        <span>
+                        Contacter
+                        </span>
+                    </div>
+                </div>
             </div>
+        
+            <!-- la Console -->
+            <section id="typeWriter">
+            </section>
         </div>
     </div>
 
-    <!-- la Console -->
-    <section id="typeWriter">
-    </section>
+
 
     <script>
         var baseURL = <%- JSON.stringify(baseURL) %>;

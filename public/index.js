@@ -19,7 +19,7 @@ async function ping(data) {
         await writer.typeIt(result.message);
       }
       if (result.redirect) {
-        await sleep(2000);
+        await sleep(1000);
         if (result.redirect === 'next') {
           if (result.nextData.additionalHTML) {
             $('body').append(result.nextData.additionalHTML)

@@ -74,7 +74,7 @@
         {
             "name": "simple",
             "initialLines": [
-                "Quel est la couleur d'une '0bùa@n6a:09987n@e1'.replace(/[^a-z0-9]/gi, '') ?"
+                "Quel est la couleur d'une '0bùa@n6a:09987n@e1'.replace(/[^a-z]/gi, '') ?"
             ],
             "answer": ["jaune"],
             "wrongAnswer": "Mauvaise réponse.",
@@ -88,7 +88,7 @@
             ],
             "answer": ["http"],
             "wrongAnswer": "Ce n'est pas ça. Ou peut être que je n'ai pas compris. Sois le plus simple possible dans ta réponse.",
-            "goodAnswer": "Bien joué !",
+            "goodAnswer": "Bonne réponse !",
             "tag": "easy"
         },
         {
@@ -101,7 +101,7 @@
             ],
             "answer": ["une api", "api"],
             "wrongAnswer": "Mauvaise réponse.",
-            "goodAnswer": "Bien joué !",
+            "goodAnswer": "Exactement.",
             "tag": "devinette"
         },
         {
@@ -115,7 +115,7 @@
             ],
             "answer": ["une base de données", "base de données", "bdd"],
             "wrongAnswer": "Mauvaise réponse.",
-            "goodAnswer": "Bien joué !",
+            "goodAnswer": "Exactement.",
             "tag": "devinette"
         },
         {
@@ -129,7 +129,7 @@
             ],
             "answer": ["une spa", "spa", "single page application"],
             "wrongAnswer": "Mauvaise réponse.",
-            "goodAnswer": "Bien joué !",
+            "goodAnswer": "Exactement.",
             "tag": "devinette"
         },
         {
@@ -157,7 +157,7 @@
             "answer": ["100", "'d'"],
             "wrongAnswer": "Aie. On ne parle definitivement pas la même langue.",
             "otherWrongs": ["Non. Desolé, mon language est de très bas niveau."],
-            "goodAnswer": "Super ! On va pouvoir communiquer tranquille. ",
+            "goodAnswer": "Super ! C'est ça.",
             "tag": "hard",
             "additionalJS": "app/utils/enigmaFiles/additionHint.js"
         },
