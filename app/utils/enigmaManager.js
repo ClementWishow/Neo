@@ -2,13 +2,14 @@ import { readFile } from "fs/promises";
 import { readFileSync } from "fs";
 import { createUser, findUserById, updateUser } from "../queries/sessionUser.queries.js";
 import { encrypt, decrypt } from "./encryptManager.js";
+import { createEnigmeTracking, findEnigme, updateEnigmeTracking } from "../queries/enigmeTracking.queries.js";
 
 
 const data = JSON.parse(
   await readFile(new URL("../data.json", import.meta.url))
 );
 
-
+let enigmesResultsByCandidat = [];
 
 function getMultipleRandom(arr, num) {
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
@@ -137,6 +138,9 @@ async function checkParticularity(stepData, req, ret) {
           break;
       }
       user.mailSend = false;
+      const indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
+      user.enigmesReussies = enigmesResultsByCandidat[indexResultByCandidat].enigmesReussies;
+      user.enigmesFailed = enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed;
       user = await updateUser(user);
 
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
@@ -170,12 +174,30 @@ export async function checkEnigma(name, req) {
   ret.correct = stepData.answer.includes(prompt);
   // gestion des cas particuliers propres à chaque etapes
   ret = await checkParticularity(stepData, req, ret);
+  const enigme = await findEnigme(name);
+
+  let indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
+  if(indexResultByCandidat === -1){
+    const resultByIp = { 
+      ip: req.socket.remoteAddress,
+      enigmesReussies: [],
+      enigmesFailed: []
+    };
+    enigmesResultsByCandidat.push(resultByIp);
+    indexResultByCandidat = enigmesResultsByCandidat.length - 1;
+  }
 
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {
-    ret.redirect = "next"
+    ret.redirect = "next";
+    enigmesResultsByCandidat[indexResultByCandidat].enigmesReussies.push(name);
+    await recordEnigmeResult(enigme, name, true);
+  }else {
+    if(name !== 'endform'){
+      enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed.push(name);
+      await recordEnigmeResult(enigme, name, false);
+    }
   }
-
   // on renvoie le texte à affiché en cherchant dans le JSON
   if (!ret.message && !req.body.mutation) {
     ret.message = ret.correct ? stepData.goodAnswer : stepData.wrongAnswer
@@ -184,4 +206,17 @@ export async function checkEnigma(name, req) {
     }
   }
   return ret;
+}
+
+async function recordEnigmeResult(enigme, name, result) {
+  if(enigme.length > 0){
+    if(result){
+      enigme[0].numberReussie++
+    }else {
+      enigme[0].numberFailed++
+    }
+    await updateEnigmeTracking(enigme[0])
+  }else {
+    await createEnigmeTracking(name, result);
+  }
 }
