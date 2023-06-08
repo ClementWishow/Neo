@@ -8,6 +8,8 @@ const sessionUser = Schema({
   stack: String,
   remuneration: String,
   mailSend: Boolean,
+  enigmesReussies: [String],
+  enigmesFailed: [String],
 });
 
 sessionUser.set("timestamps", true);

@@ -30,7 +30,7 @@ export const checkQuestions = async (req, res) => {
   let steps = decrypt(req.cookies["x-key"]).split(';')
   const result = await checkEnigma(steps[0], req);
 
-  let ret = {
+  const ret = {
     message: result.message,
     redirect: result.redirect,
   }
@@ -40,7 +40,6 @@ export const checkQuestions = async (req, res) => {
   }
   // si la reponse est correcte, on ajoute un cookie correspondant à l'etape dans la réponse
   if (result.redirect === 'next') {
-    ret.successEnigme = steps[0];
     steps.shift()
     if (result.goToForm) {
       steps = ['endform', ...steps]
