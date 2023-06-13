@@ -70,7 +70,7 @@ function checkSpyElimination(mutation) {
   return false;
 }
 
-async function checkParticularity(stepData, req, ret) {
+async function checkParticularity(stepData, req, ret, nbFailed) {
   const prompt = req.body.prompt ? req.body.prompt.toLowerCase() : null;
   switch (stepData.name) {
     case "begin":
@@ -156,10 +156,28 @@ async function checkParticularity(stepData, req, ret) {
   if (prompt === "cheat") {
       ret.correct = true
   }
+  if(!ret.redirect && !ret.correct && nbFailed > 4){
+    stepData =  data.find(x => x.name === 'firstFiveFails')
+    ret.message = stepData.initialLines;
+  }
   return ret
 }
 
 export async function checkEnigma(name, req) {
+  // on vérifie si l'adresse ip du candidat est connue
+  // cette liste nou servira plus tard à identifier ce que le candidat aura réussi ou échoué après nous avoir donné ses contacts
+  let indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
+  
+  // Si elle n'est pas connue, on la rentre dans la liste
+  if(indexResultByCandidat === -1){
+    const resultByIp = { 
+      ip: req.socket.remoteAddress,
+      enigmesReussies: [],
+      enigmesFailed: []
+    };
+    enigmesResultsByCandidat.push(resultByIp);
+    indexResultByCandidat = enigmesResultsByCandidat.length - 1;
+  }
   const stepData = data.find(x => x.name === name)
 
   // const step = parseInt(req.params.page) || 0;
@@ -170,23 +188,12 @@ export async function checkEnigma(name, req) {
     cookie: null,
     correct: false,
   };
+  
   // on verifie si la réponse est correcte en la comparant au JSON
   ret.correct = stepData.answer.includes(prompt);
   // gestion des cas particuliers propres à chaque etapes
-  ret = await checkParticularity(stepData, req, ret);
+  ret = await checkParticularity(stepData, req, ret, enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed);
   const enigme = await findEnigme(name);
-
-  let indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
-  if(indexResultByCandidat === -1){
-    const resultByIp = { 
-      ip: req.socket.remoteAddress,
-      enigmesReussies: [],
-      enigmesFailed: []
-    };
-    enigmesResultsByCandidat.push(resultByIp);
-    indexResultByCandidat = enigmesResultsByCandidat.length - 1;
-  }
-
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {
     ret.redirect = "next";

@@ -19,6 +19,18 @@
             "tag": "scenario"
         },
         {
+            "name": "firstFiveFails",
+            "initialLines": [
+                "Je vois que tu bloques, mais tu persévères, une qualité très appréciable pour nous.",
+                "Je te propose donc deux choix.",
+                "Soit je te laisse encore 3 opportunités de réussir. (écrit continuer)",
+                "Ou tu nous laisse tes coordonnées pour qu'un membre de notre equipe te contacte et t'en dise plus. (écrit contact)"
+            ],
+            "continue": ["continuer"],
+            "contact": "contact",
+            "tag": "scenario"
+        },
+        {
             "name": "eveille",
             "initialLines": [
                 "Bien Joué. En répondant à ces premieres questions, tu obtiens le premier badge :<div style='color: red'>Eveillé</div>",
