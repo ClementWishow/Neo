@@ -43,6 +43,30 @@ body {
 a { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 
+
+hr {
+    border-top: 5px dashed #12BD64;
+	border-bottom: #0E1118;
+    border-left: #0E1118;
+	border-right: #0E1118;
+}
+
+.rabbit {
+	height: 87px;
+	position: relative;
+	animation: MyDiv 3s infinite ease-in;
+}
+
+.moving {
+	width: 50px;
+	height: 50px;
+}
+
+@keyframes MyDiv {
+	0%   {left: 0px; top: 0px;}
+	100%  {left: 100px; top: 0px;}
+  }
+
 #spy {
 	color: rgb(20, 6, 36);
 	align-items: start;
