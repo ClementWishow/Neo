@@ -26,8 +26,17 @@
                 "Soit je te laisse encore 3 opportunités de réussir. (écrit continuer)",
                 "Ou tu nous laisse tes coordonnées pour qu'un membre de notre equipe te contacte et t'en dise plus. (écrit contact)"
             ],
-            "continue": ["continuer"],
-            "contact": "contact",
+            "answer": ["contact"],
+            "tag": "scenario"
+        },
+        {
+            "name": "lastThreeFails",
+            "initialLines": [
+                "Tu as 8 essais sans succès.",
+                "Bravo tout de même pour ta perseverance. Au vu de celle-ci, je pense que tu as les qualités qu'il faut",
+                "Je te propose que l'on échange, qu'en penses-tu ?"
+            ],
+            "answer": ["oui", "ok", "d'accord"],
             "tag": "scenario"
         },
         {
