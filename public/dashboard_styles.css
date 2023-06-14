@@ -2,3 +2,16 @@ td {
     border: solid 1px black;
     padding: 20px;
 }
+
+.jour, .semaine {
+    width: 150px;
+    text-align: center;
+}
+
+.text_center{
+    text-align: center;
+}
+
+.margin_auto {
+    margin: auto;
+}

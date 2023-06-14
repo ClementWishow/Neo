@@ -12,9 +12,14 @@
         let enigmes = <%- JSON.stringify(enigmes) %>;
         let candidats = <%- JSON.stringify(candidats) %>;
         let candidatsFinal = <%- JSON.stringify(candidatsFinal) %>;
-    </script>
+        let visitsDates = <%- JSON.stringify(visitsDates) %>;
+        let days = <%- JSON.stringify(days) %>;
+        let semaines = <%- JSON.stringify(semaines) %>;
+        </script>
     <script type="module" src="./public/dashboard.js"></script>
-    <h2>Résultats des candidats ayant été jusqu'à la validation des données contact</h2>
+    <h1 class="text_center">Nombre total de candidat : <%= candidats.length %></h1>
+    <h1 class="text_center">Nombre de candidat allant jusqu'au bout (ratio en %): <%= candidatsFinal.length %> (<%= (candidatsFinal.length / (candidats.length)) * 100 %>)</h1>
+    <h2 class="text_center">Résultats des candidats ayant été jusqu'à la validation des données contact</h2>
     <table>
         <thead>
             <th>Nom/Prenom (ou Prenom/Nom)</th>
@@ -47,10 +52,38 @@
              <% } %>
         </tbody>
     </table>
-    <h1>Nombre total de candidat : <%= candidats.length %></h1>
-    <h1>Nombre de candidat allant jusqu'au bout (ratio en %): <%= candidatsFinal.length %> (<%= (candidatsFinal.length / (candidats.length)) * 100 %>)</h1>
-    <h2>Taux de réussite/échec aux énigmes</h2>
+    <h2 class="text_center">Visites au cours des derniers jours</h2>
     <table>
+        <thead>
+            <% for(var i=0; i < days.length; i++) { %>
+                <th class="jour"><%= days[i] %></th>
+             <% } %>
+        </thead>
+        <tbody>
+            <tr>
+                <% for(var i=0; i < days.length; i++) { %>
+                    <td class="jour"><%= visitsDates[days[i]] %></td>
+                 <% } %>
+            </tr>
+        </tbody>
+    </table>
+    <h2 class="text_center">Visites au cours des dernières semaines</h2>
+    <table>
+        <thead>
+            <% for(var i=0; i < semaines.length; i++) { %>
+                <th class="semaine">semaine du <%= semaines[i] %></th>
+             <% } %>
+        </thead>
+        <tbody>
+            <tr>
+                <% for(var i=0; i < semaines.length; i++) { %>
+                    <td class="semaine"><%= visitsDates[semaines[i]] %></td>
+                 <% } %>
+            </tr>
+        </tbody>
+    </table>
+    <h2 class="text_center">Taux de réussite/échec aux énigmes</h2>
+    <table class="margin_auto">
         <thead>
             <th>Enigme</th>
             <th>Réussite(s) [nombre & (%)]</th>
