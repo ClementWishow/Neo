@@ -1,5 +1,5 @@
 import { readFile } from "fs/promises";
-import { getEnigmaData, checkEnigma, createEnigmaPath } from "../utils/enigmaManager.js";
+import { getEnigmaData, checkEnigma, createEnigmaPath, isFirstFiveFailedReached, isLastThreeFailedReached } from "../utils/enigmaManager.js";
 import { encrypt, decrypt } from "../utils/encryptManager.js";
 
 const trame = JSON.parse(
@@ -38,7 +38,7 @@ export const checkQuestions = async (req, res) => {
   if (result.cookie) {
     res.cookie('x-id', result.cookie)
   }
-  // si la reponse est correcte, on ajoute un cookie correspondant à l'etape dans la réponse
+  // si la reponse est correcte, on modifie le cookie x-key pour passer à l'etape suivante
   if (result.redirect === 'next') {
     steps.shift()
     if (result.goToForm) {
@@ -50,6 +50,21 @@ export const checkQuestions = async (req, res) => {
       ret.nextData.initialLines = [...trame[index], ...ret.nextData.initialLines]   
     }
     res.cookie('x-key', encrypt(steps.join(';')));
+  }else {
+    const firstFiveFailed = isFirstFiveFailedReached(req.socket.remoteAddress);
+    const lastThreeFailed = isLastThreeFailedReached(req.socket.remoteAddress);
+    if(firstFiveFailed || lastThreeFailed){
+      if(firstFiveFailed){
+        steps = ['firstFiveFails', ...steps]
+        ret.message = "Ce n'est toujours pas ça."
+      }else if(lastThreeFailed){
+        steps = ['lastThreeFails', ...steps]
+        ret.message = "Je suis désolé mais non."
+      }
+      ret.redirect = "next";
+      ret.nextData = getEnigmaData(steps[0])
+      res.cookie('x-key', encrypt(steps.join(';')));
+    }
   }
   res.status(201).json(ret);
 };

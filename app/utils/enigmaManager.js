@@ -11,6 +11,18 @@ const data = JSON.parse(
 
 let enigmesResultsByCandidat = [];
 
+export function isFirstFiveFailedReached(ip){
+  const indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === ip);
+  const enigmesFailed = enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed;
+  return enigmesFailed.length == 5;
+}
+
+export function isLastThreeFailedReached(ip){
+  const indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === ip);
+  const enigmesFailed = enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed;
+  return enigmesFailed.length == 8;
+}
+
 function getMultipleRandom(arr, num) {
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
 
@@ -81,6 +93,17 @@ async function checkParticularity(stepData, req, ret) {
         ret.message = ret.correct ? stepData.goodAnswer : stepData.wrongAnswer;
       }
       break;
+    case "firstFiveFails":
+      if(prompt === "contact"){
+        ret.goToForm = true
+      }else {
+        ret.correct = true;
+      }
+      break;
+    case "lastThreeFails":
+      if(stepData.answer.includes(prompt)){
+        ret.goToForm = true
+      }
     case "spy":
       if (req.body.mutation && checkSpyElimination(req.body.mutation)) {
         ret.message = stepData.goodAnswer;
@@ -160,6 +183,20 @@ async function checkParticularity(stepData, req, ret) {
 }
 
 export async function checkEnigma(name, req) {
+  // on vérifie si l'adresse ip du candidat est connue
+  // cette liste nou servira plus tard à identifier ce que le candidat aura réussi ou échoué après nous avoir donné ses contacts
+  let indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
+  
+  // Si elle n'est pas connue, on la rentre dans la liste
+  if(indexResultByCandidat === -1){
+    const resultByIp = { 
+      ip: req.socket.remoteAddress,
+      enigmesReussies: [],
+      enigmesFailed: []
+    };
+    enigmesResultsByCandidat.push(resultByIp);
+    indexResultByCandidat = enigmesResultsByCandidat.length - 1;
+  }
   const stepData = data.find(x => x.name === name)
 
   // const step = parseInt(req.params.page) || 0;
@@ -170,23 +207,12 @@ export async function checkEnigma(name, req) {
     cookie: null,
     correct: false,
   };
+  
   // on verifie si la réponse est correcte en la comparant au JSON
   ret.correct = stepData.answer.includes(prompt);
   // gestion des cas particuliers propres à chaque etapes
   ret = await checkParticularity(stepData, req, ret);
   const enigme = await findEnigme(name);
-
-  let indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
-  if(indexResultByCandidat === -1){
-    const resultByIp = { 
-      ip: req.socket.remoteAddress,
-      enigmesReussies: [],
-      enigmesFailed: []
-    };
-    enigmesResultsByCandidat.push(resultByIp);
-    indexResultByCandidat = enigmesResultsByCandidat.length - 1;
-  }
-
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {
     ret.redirect = "next";
