@@ -35,9 +35,6 @@ export const checkQuestions = async (req, res) => {
     redirect: result.redirect,
   }
 
-  if (result.cookie) {
-    res.cookie('x-id', result.cookie)
-  }
   // si la reponse est correcte, on ajoute un cookie correspondant à l'etape dans la réponse
   if (result.redirect === 'next') {
     steps.shift()

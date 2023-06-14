@@ -23,3 +23,7 @@ export const findEnigme = (enigme) => {
 export const updateEnigmeTracking = (enigme) => {
     return enigmeTracking.findByIdAndUpdate({ _id: enigme._id }, enigme, {new: true});
 }
+
+export const findAllEnigmes = () => {
+    return enigmeTracking.find({}).exec();
+}

@@ -1,7 +1,6 @@
 import { readFile } from "fs/promises";
 import { readFileSync } from "fs";
-import { createUser, findUserById, updateUser } from "../queries/sessionUser.queries.js";
-import { encrypt, decrypt } from "./encryptManager.js";
+import { createUser, findUserByIp, updateUser } from "../queries/sessionUser.queries.js";
 import { createEnigmeTracking, findEnigme, updateEnigmeTracking } from "../queries/enigmeTracking.queries.js";
 
 
@@ -113,35 +112,31 @@ async function checkParticularity(stepData, req, ret) {
     case "one": 
       stepData =  data.find(x => x.name === 'endform')
     case "endform":
-      let user = null
-      if (req.body.try === 1) {
-        user = await createUser(req.body.prompt);
-        ret.cookie = encrypt(user._id.toString())
-      }
-      else {
-        user = await findUserById(Buffer.from(decrypt(req.cookies["x-id"]).toString('hex')))
-      }
+      let user = await findUserByIp(req.socket.remoteAddress);
       switch(req.body.try){
+        case 1:
+          user[0].name = prompt;
+          break;
         case 2:
-          user.email = prompt;
+          user[0].email = prompt;
           break;
         case 3:
-          user.stack = prompt;
+          user[0].stack = prompt;
           break;
         case 4:
-          user.tel = prompt;
+          user[0].tel = prompt;
           break;
         case 5:
-          user.remuneration = prompt;
+          user[0].remuneration = prompt;
           break;
         default:
           break;
       }
-      user.mailSend = false;
+      user[0].mailSend = false;
       const indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
-      user.enigmesReussies = enigmesResultsByCandidat[indexResultByCandidat].enigmesReussies;
-      user.enigmesFailed = enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed;
-      user = await updateUser(user);
+      user[0].enigmesReussies = enigmesResultsByCandidat[indexResultByCandidat].enigmesReussies;
+      user[0].enigmesFailed = enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed;
+      await updateUser(user[0]);
 
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
 
@@ -170,14 +165,14 @@ export async function checkEnigma(name, req) {
     cookie: null,
     correct: false,
   };
-  // on verifie si la réponse est correcte en la comparant au JSON
-  ret.correct = stepData.answer.includes(prompt);
-  // gestion des cas particuliers propres à chaque etapes
-  ret = await checkParticularity(stepData, req, ret);
-  const enigme = await findEnigme(name);
 
+  // On regarde si le candidat est connue via son ip
   let indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
+  // Si l'ip du candidat n'est pas connue, on l'enregistre
+  // Cela permettra de connaitre le nombre de candidats ayant essayé ce projet
+  // On pourra aussi le retrouver lors de la soumission du formulaire de contact s'il va jusque là et ainsi connaître le ratio de candidats allant jusqu'au bout
   if(indexResultByCandidat === -1){
+    await createUser(req.socket.remoteAddress)
     const resultByIp = { 
       ip: req.socket.remoteAddress,
       enigmesReussies: [],
@@ -187,13 +182,19 @@ export async function checkEnigma(name, req) {
     indexResultByCandidat = enigmesResultsByCandidat.length - 1;
   }
 
+  // on verifie si la réponse est correcte en la comparant au JSON
+  ret.correct = stepData.answer.includes(prompt);
+  // gestion des cas particuliers propres à chaque etapes
+  ret = await checkParticularity(stepData, req, ret);
+  const enigme = await findEnigme(name);
+
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {
     ret.redirect = "next";
     enigmesResultsByCandidat[indexResultByCandidat].enigmesReussies.push(name);
     await recordEnigmeResult(enigme, name, true);
   }else {
-    if(name !== 'endform'){
+    if(name !== 'endform' || name !== 'firstFiveFails' || name !== 'lastThreeFails'){
       enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed.push(name);
       await recordEnigmeResult(enigme, name, false);
     }
