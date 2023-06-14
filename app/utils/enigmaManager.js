@@ -96,8 +96,14 @@ async function checkParticularity(stepData, req, ret) {
     case "firstFiveFails":
       if(prompt === "contact"){
         ret.goToForm = true
+      }else {
+        ret.correct = true;
       }
       break;
+    case "lastThreeFails":
+      if(stepData.answer.includes(prompt)){
+        ret.goToForm = true
+      }
     case "spy":
       if (req.body.mutation && checkSpyElimination(req.body.mutation)) {
         ret.message = stepData.goodAnswer;

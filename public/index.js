@@ -14,7 +14,6 @@ async function ping(data) {
   })
     .then((response) => response.json())
     .then(async (result) => {
-      console.log(result)
       if(result.successEnigme && result.successEnigme !== 'begin'){
         gtag('event', 'énigme_réussie', {
           'event_category': 'Énigmes',

@@ -32,7 +32,7 @@
         {
             "name": "lastThreeFails",
             "initialLines": [
-                "Tu as 8 essais sans succès.",
+                "Tu as eu 8 essais sans succès.",
                 "Bravo tout de même pour ta perseverance. Au vu de celle-ci, je pense que tu as les qualités qu'il faut",
                 "Je te propose que l'on échange, qu'en penses-tu ?"
             ],
