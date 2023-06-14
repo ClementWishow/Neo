@@ -26,19 +26,24 @@ async function ping(data) {
       }
       if (result.redirect) {
         await sleep(1000);
-        if (result.redirect === 'next') {
+        if (result.redirect === "next") {
+          document.querySelector(".rabbit").style.animationPlayState =
+            "running";
           if (result.nextData.additionalHTML) {
-            $('body').append(result.nextData.additionalHTML)
+            $("body").append(result.nextData.additionalHTML);
           }
           if (result.nextData.additionalJS) {
             eval(result.nextData.additionalJS);
           }
-          writer.reload()
-          writer.blockedLetter = result.nextData.blockedLetter || null
-          writer.noTyping = result.nextData.noTyping
-          writer.typeLines(result.nextData.initialLines)
-        }
-        else {
+          writer.reload();
+          writer.blockedLetter = result.nextData.blockedLetter || null;
+          writer.noTyping = result.nextData.noTyping;
+          writer.typeLines(result.nextData.initialLines);
+          setTimeout(() => {
+            document.querySelector(".rabbit").style.animationPlayState =
+              "paused";
+          }, 1000);
+        } else {
           window.location = result.redirect;
         }
       } else if (result.message) {
@@ -77,12 +82,12 @@ const observer = new MutationObserver(function (mutations) {
           name: mutation.target.nodeName,
         }
       : null;
-    const added = Array.from(mutation.addedNodes).map((x) => ({
+    const added = Array.from(mutation.addedNodes, (x) => ({
       class: x.className,
       id: x.id,
       name: x.nodeName,
     }));
-    const deleted = Array.from(mutation.removedNodes).map((x) => ({
+    const deleted = Array.from(mutation.removedNodes, (x) => ({
       class: x.className,
       id: x.id,
       name: x.nodeName,
