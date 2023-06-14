@@ -15,9 +15,7 @@ body {
 	font-size: 16px;
 	line-height: 25px;
 
-	/* or 156% */
 	letter-spacing: 0.15em;
-	
 	color: #12BD64;
 	
 }
@@ -53,11 +51,8 @@ a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 #typeWriter {
 	width: 100%;
 	height: 100%;
-	/* color: #33d011; */
 	margin-top: 100px;
   
-	/* background: rgb(20, 6, 36); */
-	/* font-family: 'VT323' ,courier; */
 	padding-top: 30px;
 
 }
