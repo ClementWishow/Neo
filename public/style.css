@@ -1,14 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700');
+
 html {
-    color: white;
-    font-size: 1.5em;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
+	width: 100%;
+	height: 100%;
 }
 
 body {  
+	width:100%; 
+	height: 100%;
+	margin: 0;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 25px;
+
+	letter-spacing: 0.15em;
+	color: #12BD64;
+	
+}
+
+.layout {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #0E1118;
     width:100%; 
-    margin:0 auto; 
-    background-color: rgb(20, 6, 36);
+	height: 100%;
+}
+
+.console {
+	box-sizing: border-box;
+	width: 84%;
+	height: 68%;
+	padding: 32px;
+	
+	background: #0E1118;
+	box-shadow: 0px 0px 64px #000000;
+	border-radius: 8px;
 }
 
 a { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
@@ -22,19 +51,14 @@ a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 #typeWriter {
 	width: 100%;
 	height: 100%;
-	color: #33d011;
 	margin-top: 100px;
   
-	background: rgb(20, 6, 36);
-	font-family: 'VT323' ,courier;
-	padding: 30px;
+	padding-top: 30px;
 
 }
 
 #typeWriter span {
 	display: block;
-	font-size: 25px;
-	letter-spacing: 2px;
 }
 
 #typeWriter > :last-child::after {
@@ -68,7 +92,8 @@ a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 }
 
 #wishow {
-    width: 275px;
+    width: 300px;
+
 }
 
 pre { 
@@ -85,22 +110,26 @@ pre {
     display: flex;
     justify-content: space-between;
     width: 1645px;
-	margin: 0px 30px;
 }
 
 .btn {
-    border: solid 1px rgb(99, 253, 136);
-	border-radius: 20px;
+	width: 167px;
+	height: 38px;
+	padding: 4px 8px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #12BD64;
+	border-radius: 6px;
     box-sizing: border-box;
-	color: rgb(99, 253, 136);
-	display: block;
-	font: 1.125rem 'Oswald', Arial, sans-serif; /*18*/
-	height: 55px;
+	gap: 8px;
+	font: 'Inter', sans-serif;
+	font-size: 16px;
+	line-height:40px;
 	letter-spacing: 1px;
-	margin: auto 0;
-	padding: 4px;
 	text-transform: uppercase;
-	width: 100px;
+	color: rgb(99, 253, 136);
 }
 
 .btn span {
