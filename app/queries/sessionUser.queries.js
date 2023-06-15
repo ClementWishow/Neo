@@ -25,3 +25,7 @@ export const getAllUsersToSendToRh = () => {
 export const getAllCandidats = () => {
   return sessionUser.find({}).exec();
 }
+
+export const deleteLocalIp = (ip) => {
+  return sessionUser.deleteOne({ ip: ip}).exec();
+}

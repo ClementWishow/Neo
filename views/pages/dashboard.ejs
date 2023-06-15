@@ -17,6 +17,7 @@
         let semaines = <%- JSON.stringify(semaines) %>;
         </script>
     <script type="module" src="./public/dashboard.js"></script>
+    <button id="delete">Supprimer le cas de test local</button>
     <h1 class="text_center">Nombre total de candidat : <%= candidats.length %></h1>
     <h1 class="text_center">Nombre de candidat allant jusqu'au bout (ratio en %): <%= candidatsFinal.length %> (<%= (candidatsFinal.length / (candidats.length)) * 100 %>)</h1>
     <h2 class="text_center">Résultats des candidats ayant été jusqu'à la validation des données contact</h2>
@@ -68,7 +69,7 @@
         </tbody>
     </table>
     <h2 class="text_center">Visites au cours des dernières semaines</h2>
-    <table>
+    <table class="margin_auto">
         <thead>
             <% for(var i=0; i < semaines.length; i++) { %>
                 <th class="semaine">semaine du <%= semaines[i] %></th>
@@ -88,14 +89,14 @@
             <th>Enigme</th>
             <th>Réussite(s) [nombre & (%)]</th>
             <th>Echec(s) [nombre & (%)]</th>
-            <th>Essais totaux</th>
+            <th>Essais total</th>
         </thead>
         <tbody>
             <% for(var i=0; i < enigmes.length; i++) { %>
                 <tr>
                     <td><%= enigmes[i].name %></td>
-                    <td><%= enigmes[i].numberReussie %> (<%= (enigmes[i].numberReussie / (enigmes[i].numberReussie+enigmes[i].numberFailed)) * 100%>)</td>
-                    <td><%= enigmes[i].numberFailed %> (<%= (enigmes[i].numberFailed / (enigmes[i].numberReussie+enigmes[i].numberFailed)) * 100%>)</td>
+                    <td><%= enigmes[i].numberReussie %> (<%= (enigmes[i].numberReussie / (enigmes[i].numberReussie + enigmes[i].numberFailed)) * 100%>)</td>
+                    <td><%= enigmes[i].numberFailed %> (<%= (enigmes[i].numberFailed / (enigmes[i].numberReussie + enigmes[i].numberFailed)) * 100%>)</td>
                     <td><%= enigmes[i].numberReussie+enigmes[i].numberFailed %></td>
                 </tr>
             <% } %>

@@ -192,9 +192,11 @@ export async function checkEnigma(name, req) {
   if (!ret.redirect && ret.correct) {
     ret.redirect = "next";
     enigmesResultsByCandidat[indexResultByCandidat].enigmesReussies.push(name);
-    await recordEnigmeResult(enigme, name, true);
+    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails'){
+      await recordEnigmeResult(enigme, name, true);
+    }
   }else {
-    if(name !== 'endform' || name !== 'firstFiveFails' || name !== 'lastThreeFails'){
+    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails'){
       enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed.push(name);
       await recordEnigmeResult(enigme, name, false);
     }
