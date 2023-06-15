@@ -43,6 +43,58 @@ body {
 a { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 
+/* progress bar */
+
+#progress-bar-container {
+    height: 13px;
+    position: relative;
+    width: 50%;
+	margin-left: 48px;
+    margin-top: 60px;
+}
+
+.progress-bar-child {
+	height: 47%;
+}
+
+.progress {
+	 background: repeating-linear-gradient(270deg,#12BD64 0 32px,#0E1118 0 42px);
+}
+
+.shrinker {
+	background-color: black;
+	position: absolute;
+	top: 0;
+	right: 0;
+    width: 95%;
+}
+
+.timelapse {
+	animation-name: timelapse;
+	animation-fill-mode: forwards;
+	animation-play-state: paused;  
+	animation-duration: 6s;
+	animation-timing-function: cubic-bezier(.86, .05, .4, .96);
+	background: repeating-linear-gradient(270deg, #33383D 0 32px,#0E1118 0 42px);
+}
+
+.rabbit {
+	height: 50px;
+	position: absolute;
+    top: -22px;
+    left: -18px;
+	transform: scaleX(-1);
+	z-index: 1;
+}
+/* 
+@keyframes timelapse {
+	0% {
+		width: 100%;
+	}
+	100% {
+		width: 0%;
+	}
+} */
 
 .hr {
     border-top: 5px dashed #12BD64;
@@ -51,25 +103,23 @@ a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 
 .stepper {
 	background-color: #0E1118;
+	position: absolute;
+    left: -53px;
+    top: -25px;
 }
 
 .stepper1 {
-	left: 543px;
-    position: absolute;
+	position: absolute;
+    left: 376px;
+    top: -25px;
 }
 
 .stepper3 {
-	left: 964px;
     position: absolute;
     background-color: #0E1118;
-}
-
-.rabbit {
-	height: 55px;
-	position: relative;
-	animation: moveRabbit 7s ease-in;
-	animation-play-state: paused;
-	transform: scaleX(-1);
+	position: absolute;
+    left: 777px;
+    top: -25px;
 }
 
 .center_rabbit {
@@ -93,9 +143,6 @@ a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 	width: 100%;
 	height: 100%;
 	margin-top: 100px;
-  
-	padding-top: 30px;
-
 }
 
 #typeWriter span {

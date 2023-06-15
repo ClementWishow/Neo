@@ -14,10 +14,10 @@ async function ping(data) {
   })
     .then((response) => response.json())
     .then(async (result) => {
-      if(result.successEnigme && result.successEnigme !== 'begin'){
-        gtag('event', 'énigme_réussie', {
-          'event_category': 'Énigmes',
-          'event_label': result.successEnigme
+      if (result.successEnigme && result.successEnigme !== "begin") {
+        gtag("event", "énigme_réussie", {
+          event_category: "Énigmes",
+          event_label: result.successEnigme,
         });
       }
       if (result.message) {
@@ -27,8 +27,8 @@ async function ping(data) {
       if (result.redirect) {
         await sleep(1000);
         if (result.redirect === "next") {
-          document.querySelector(".rabbit").style.animationPlayState =
-            "running";
+          animationRabbit({ numberOfEnigmas: 10 });
+
           if (result.nextData.additionalHTML) {
             $("body").append(result.nextData.additionalHTML);
           }
@@ -39,10 +39,6 @@ async function ping(data) {
           writer.blockedLetter = result.nextData.blockedLetter || null;
           writer.noTyping = result.nextData.noTyping;
           writer.typeLines(result.nextData.initialLines);
-          setTimeout(() => {
-            document.querySelector(".rabbit").style.animationPlayState =
-              "paused";
-          }, 1000);
         } else {
           window.location = result.redirect;
         }
@@ -52,8 +48,35 @@ async function ping(data) {
       }
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Error:", error.message);
     });
+}
+
+let positionRabbit = 90;
+
+function animationRabbit({ numberOfEnigmas }) {
+  // TODO faire en sorte que ça commence a la premiere enigmes et par a l'intro
+
+  const { delayAnimation, delaySetTimeout } = {
+    delayAnimation: numberOfEnigmas * 1000,
+    delaySetTimeout: numberOfEnigmas * 100,
+  };
+
+  positionRabbit -= 10;
+
+  const animationProperty = document.querySelector(".timelapse").animate(
+    [
+      // from
+      { width: `-${positionRabbit}%` },
+      // to
+      { width: `0%` },
+    ],
+    delayAnimation
+  );
+
+  setTimeout(() => {
+    animationProperty.pause();
+  }, delaySetTimeout);
 }
 
 // evenement : l'utilisateur appuie sur une touche
