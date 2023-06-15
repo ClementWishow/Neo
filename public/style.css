@@ -39,13 +39,17 @@ body {
 a { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 
-#typeWriter {
-	width: 100%;
-	height: 100%;
+.writer-container {
+	transform: rotate(180deg);
 	margin-top: 100px;
-	overflow-y: auto;
 	padding-top: 30px;
 	max-height: calc(100% - 214px);
+	overflow-y: auto;
+}
+
+#typeWriter {
+	width: 100%;
+	transform: rotate(180deg);
 }
 
 #typeWriter span {
