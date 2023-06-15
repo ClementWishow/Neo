@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 import { getEnigmaData, checkEnigma, createEnigmaPath } from "../utils/enigmaManager.js";
 import { encrypt, decrypt } from "../utils/encryptManager.js";
+import { createUser } from "../queries/sessionUser.queries.js";
 
 const trame = JSON.parse(
   await readFile(new URL("../trame.json", import.meta.url))
@@ -8,6 +9,9 @@ const trame = JSON.parse(
 
 export const getFirstPage = async (req, res) => {
   try {
+    if(!req.app.locals.baseURL.contains('localhost')){
+      await createUser(req.socket.remoteAddress)
+    }
     const cookie = req.cookies["x-key"]
     let stepName = 'begin';
 

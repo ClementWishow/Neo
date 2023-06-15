@@ -1,6 +1,6 @@
 import { readFile } from "fs/promises";
 import { readFileSync } from "fs";
-import { createUser, findUserByIp, updateUser } from "../queries/sessionUser.queries.js";
+import { findUserByIp, updateUser } from "../queries/sessionUser.queries.js";
 import { createEnigmeTracking, findEnigme, updateEnigmeTracking } from "../queries/enigmeTracking.queries.js";
 
 
@@ -8,14 +8,11 @@ const data = JSON.parse(
   await readFile(new URL("../data.json", import.meta.url))
 );
 
-let enigmesResultsByCandidat = [];
-
 function getMultipleRandom(arr, num) {
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
 
   return shuffled.slice(0, num);
 }
-
 
 export function createEnigmaPath() {
   const easy = getMultipleRandom(data.filter(x => x.tag === 'easy'), 2).map(x => x.name)
@@ -112,7 +109,9 @@ async function checkParticularity(stepData, req, ret) {
     case "one": 
       stepData =  data.find(x => x.name === 'endform')
     case "endform":
-      let user = await findUserByIp(req.socket.remoteAddress);
+      if(!req.app.locals.baseURL.contains('localhost')){
+        let user = await findUserByIp(req.socket.remoteAddress);
+      }
       switch(req.body.try){
         case 1:
           user[0].name = prompt;
@@ -132,10 +131,9 @@ async function checkParticularity(stepData, req, ret) {
         default:
           break;
       }
-      user[0].mailSend = false;
-      const indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
-      user[0].enigmesReussies = enigmesResultsByCandidat[indexResultByCandidat].enigmesReussies;
-      user[0].enigmesFailed = enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed;
+      if(!req.app.locals.baseURL.contains('localhost')){
+        user[0].mailSend = false;
+      }
       await updateUser(user[0]);
 
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
@@ -165,21 +163,8 @@ export async function checkEnigma(name, req) {
     cookie: null,
     correct: false,
   };
-
-  // On regarde si le candidat est connue via son ip
-  let indexResultByCandidat = enigmesResultsByCandidat.findIndex(result => result.ip === req.socket.remoteAddress);
-  // Si l'ip du candidat n'est pas connue, on l'enregistre
-  // Cela permettra de connaitre le nombre de candidats ayant essayé ce projet
-  // On pourra aussi le retrouver lors de la soumission du formulaire de contact s'il va jusque là et ainsi connaître le ratio de candidats allant jusqu'au bout
-  if(indexResultByCandidat === -1){
-    await createUser(req.socket.remoteAddress)
-    const resultByIp = { 
-      ip: req.socket.remoteAddress,
-      enigmesReussies: [],
-      enigmesFailed: []
-    };
-    enigmesResultsByCandidat.push(resultByIp);
-    indexResultByCandidat = enigmesResultsByCandidat.length - 1;
+  if(!req.app.locals.baseURL.contains('localhost')){
+    let user = await findUserByIp(req.socket.remoteAddress);
   }
 
   // on verifie si la réponse est correcte en la comparant au JSON
@@ -191,13 +176,15 @@ export async function checkEnigma(name, req) {
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {
     ret.redirect = "next";
-    enigmesResultsByCandidat[indexResultByCandidat].enigmesReussies.push(name);
-    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails'){
+    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails' && !req.app.locals.baseURL.contains('localhost')){
+      user[0].enigmesReussies.push(name);
+      await updateUser(user[0]);
       await recordEnigmeResult(enigme, name, true);
     }
   }else {
-    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails'){
-      enigmesResultsByCandidat[indexResultByCandidat].enigmesFailed.push(name);
+    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails' && !req.app.locals.baseURL.contains('localhost')){
+      user[0].enigmesFailed.push(name);
+      await updateUser(user[0]);
       await recordEnigmeResult(enigme, name, false);
     }
   }
