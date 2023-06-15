@@ -35,7 +35,10 @@ async function ping(data) {
         });
       }
       if (result.message) {
-        writer.appendTypeWriterItem();
+        if (writer.prompting) {
+          await writer.speedUp()
+        }
+        await writer.appendTypeWriterItem();
         await writer.typeIt(result.message);
       }
       if (result.redirect) {
@@ -95,10 +98,11 @@ const observer = new MutationObserver(function (mutations) {
     ping({ mutation: { modified: target, added: added, deleted: deleted } });
   });
 });
-
 const config = {
   subtree: true,
   childList: true,
 };
-loadPageData(initialData)
 observer.observe(document.body, config);
+
+
+loadPageData(initialData)
