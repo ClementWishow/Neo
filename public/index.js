@@ -3,6 +3,20 @@ import typeWriter from "./typeWriter.js";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const writer = new typeWriter("#typeWriter");
 
+function loadPageData(data) { 
+  $(data.additionalHTML)
+  .hide()
+  .appendTo("body")
+  .fadeIn(1000);
+  if (data.additionalJS) {
+    eval(data.additionalJS)
+  }
+  writer.reload()
+  writer.blockedLetter = data.blockedLetter || null
+  writer.noTyping = data.noTyping
+  writer.typeLines(data.initialLines)
+}
+
 // function envoyant une réponse à la question au back
 async function ping(data) {
   await fetch(baseURL + "ping", {
@@ -27,16 +41,7 @@ async function ping(data) {
       if (result.redirect) {
         await sleep(1000);
         if (result.redirect === 'next') {
-          if (result.nextData.additionalHTML) {
-            $('body').append(result.nextData.additionalHTML)
-          }
-          if (result.nextData.additionalJS) {
-            eval(result.nextData.additionalJS);
-          }
-          writer.reload()
-          writer.blockedLetter = result.nextData.blockedLetter || null
-          writer.noTyping = result.nextData.noTyping
-          writer.typeLines(result.nextData.initialLines)
+          loadPageData(result.nextData)
         }
         else {
           window.location = result.redirect;
@@ -95,5 +100,5 @@ const config = {
   subtree: true,
   childList: true,
 };
-await writer.typeLines(initialData.initialLines);
+loadPageData(initialData)
 observer.observe(document.body, config);
