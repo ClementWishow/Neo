@@ -39,11 +39,16 @@ body {
 a { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 
+.navbar {
+    display: flex;
+    justify-content: center;
+	height: 50px;
+}
+
+
 .writer-container {
 	transform: rotate(180deg);
-	margin-top: 100px;
-	padding-top: 30px;
-	max-height: calc(100% - 214px);
+	max-height: calc(80% - 50px);
 	overflow-y: auto;
 }
 
@@ -96,12 +101,6 @@ a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 	z-index: 8; 
     font-size:0.60em;
 	line-height: normal;
-}
-
-.navbar {
-    display: flex;
-    justify-content: center;
-	height: 50px;
 }
 
 .navbar__content {
