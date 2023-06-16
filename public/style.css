@@ -20,6 +20,10 @@ body {
 	
 }
 
+p {
+	margin: 0;
+}
+
 .layout {
 	display: flex;
 	justify-content: center;
@@ -46,12 +50,16 @@ a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 /* progress bar */
 
 #progress-bar-container {
+	animation-name: fadeIn;
+	animation-duration: 4s;
+	opacity: 0;
     height: 13px;
     position: relative;
     width: 50%;
 	margin-left: 48px;
     margin-top: 60px;
 }
+
 
 .progress-bar-child {
 	height: 47%;
@@ -86,26 +94,20 @@ a:hover { text-decoration:none; color:rgb(99, 253, 136) ;; transition:0.2s; }
 	transform: scaleX(-1);
 	z-index: 1;
 }
-/* 
-@keyframes timelapse {
-	0% {
-		width: 100%;
-	}
-	100% {
-		width: 0%;
-	}
-} */
 
 .hr {
     border-top: 5px dashed #12BD64;
 	width: 50%;
 }
 
-.stepper {
-	background-color: #0E1118;
+.center-item {
 	position: absolute;
     left: -53px;
     top: -25px;
+}
+
+.stepper {
+	background-color: #0E1118;
 }
 
 .stepper1 {

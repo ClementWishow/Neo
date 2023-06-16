@@ -3,6 +3,7 @@ import typeWriter from "./typeWriter.js";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const writer = new typeWriter("#typeWriter");
 
+let movingRabbit = false;
 // function envoyant une réponse à la question au back
 async function ping(data) {
   await fetch(baseURL + "ping", {
@@ -14,6 +15,7 @@ async function ping(data) {
   })
     .then((response) => response.json())
     .then(async (result) => {
+      console.log({ result });
       if (result.successEnigme && result.successEnigme !== "begin") {
         gtag("event", "énigme_réussie", {
           event_category: "Énigmes",
@@ -27,7 +29,25 @@ async function ping(data) {
       if (result.redirect) {
         await sleep(1000);
         if (result.redirect === "next") {
-          animationRabbit({ numberOfEnigmas: 10 });
+          if (result.nextData.initialLines[0].includes("Eveillé")) {
+            setTimeout(() => {
+              document.querySelector("#progress-bar-container").animate(
+                [
+                  // from
+                  { opacity: 0 },
+                  // to
+                  { opacity: 1 },
+                ],
+                2000
+              );
+              document.querySelector(
+                "#progress-bar-container"
+              ).style.opacity = 1;
+            }, 2000);
+
+            movingRabbit = true;
+          }
+          animationRabbit({ numberOfEnigmas: 10, result });
 
           if (result.nextData.additionalHTML) {
             $("body").append(result.nextData.additionalHTML);
@@ -52,31 +72,34 @@ async function ping(data) {
     });
 }
 
-let positionRabbit = 90;
+let positionRabbit = 100;
 
-function animationRabbit({ numberOfEnigmas }) {
+function animationRabbit({ numberOfEnigmas, result }) {
   // TODO faire en sorte que ça commence a la premiere enigmes et par a l'intro
 
-  const { delayAnimation, delaySetTimeout } = {
-    delayAnimation: numberOfEnigmas * 1000,
-    delaySetTimeout: numberOfEnigmas * 100,
-  };
+  if (movingRabbit) {
+    const { delayAnimation, delaySetTimeout } = {
+      delayAnimation: numberOfEnigmas * 1000,
+      delaySetTimeout: numberOfEnigmas * 100,
+    };
 
-  positionRabbit -= 10;
+    if (!result.nextData.initialLines[0].includes("Eveillé")) {
+      positionRabbit -= 10;
+      const animationProperty = document.querySelector(".timelapse").animate(
+        [
+          // from
+          { width: `${positionRabbit}%` },
+          // to
+          { width: "0%" },
+        ],
+        delayAnimation
+      );
 
-  const animationProperty = document.querySelector(".timelapse").animate(
-    [
-      // from
-      { width: `-${positionRabbit}%` },
-      // to
-      { width: `0%` },
-    ],
-    delayAnimation
-  );
-
-  setTimeout(() => {
-    animationProperty.pause();
-  }, delaySetTimeout);
+      setTimeout(() => {
+        animationProperty.pause();
+      }, delaySetTimeout);
+    }
+  }
 }
 
 // evenement : l'utilisateur appuie sur une touche
