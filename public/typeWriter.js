@@ -85,7 +85,6 @@ export default class TypeWriter {
 
 	// gestion du prompt de l'utilisateur
 	prompt(input) {
-		console.log ("prompting = ", this.prompting)
 		if (input === "Enter") {
 			if (this.prompting) 
 			{
