@@ -170,6 +170,9 @@ export async function checkEnigma(name, req) {
     cookie: null,
     correct: false,
   };
+  if (req.body.mutation && !stepData.checkMutations) {
+    return ret
+  }
   // on verifie si la réponse est correcte en la comparant au JSON
   ret.correct = stepData.answer.includes(prompt);
   // gestion des cas particuliers propres à chaque etapes
