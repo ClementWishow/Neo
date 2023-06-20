@@ -147,7 +147,8 @@
             "goodAnswer": "Bravo, et bien vu.",
             "noTyping": true,
             "additionalHTML": "app/utils/enigmaFiles/spy.html",
-            "tag": "medium"
+            "tag": "medium",
+            "checkMutations": true
         },
         {
             "name": "addition",
