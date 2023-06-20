@@ -95,6 +95,9 @@ const observer = new MutationObserver(function (mutations) {
       id: x.id,
       name: x.nodeName,
     }));
+    if (added && added.length > 0 && added[0].name === "SCRIPT") {
+      return
+    }
     ping({ mutation: { modified: target, added: added, deleted: deleted } });
   });
 });

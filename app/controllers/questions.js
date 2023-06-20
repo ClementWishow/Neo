@@ -10,8 +10,6 @@ export const getFirstPage = async (req, res) => {
   try {
     const cookie = req.cookies["x-key"]
     let stepName = 'begin';
-
-      
     if (!cookie) {
       const journey = createEnigmaPath().join(';');
       res.cookie("x-key", encrypt(journey))
