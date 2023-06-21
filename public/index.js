@@ -75,8 +75,6 @@ async function ping(data) {
 let positionRabbit = 100;
 
 function animationRabbit({ numberOfEnigmas, result }) {
-  // TODO faire en sorte que ça commence a la premiere enigmes et par a l'intro
-
   if (movingRabbit) {
     const { delayAnimation, delaySetTimeout } = {
       delayAnimation: numberOfEnigmas * 1000,
