@@ -1,19 +1,41 @@
 import { findAllEnigmes } from "../queries/enigmeTracking.queries.js";
 import { getAllCandidats } from "../queries/sessionUser.queries.js";
 
+export const getCandidatsContacts = async (req, res) => {
+  const candidats = await getAllCandidats();
+  let candidatsFinal = [];
+  candidats.forEach(c => {
+    if(c.name){
+      candidatsFinal.push(c);
+    }
+  });
+  res.render("pages/dashboard_candidats_contacts", {
+    candidats: candidats, 
+    candidatsFinal: candidatsFinal,
+  });
+}
+
 export const getDashboard = async (req, res) => {
     try {
       const enigmes = await findAllEnigmes();
       const candidats = await getAllCandidats();
       let visitsDates = {}
-      let candidatsFinal = [];
       const joursSemaine = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
       let today;
+      let eveille = 0;
+      let agent = 0;
+      let elu = 0;
       candidats.forEach(c => {
-        today = new Date();
-        if(c.name){
-          candidatsFinal.push(c);
+        if(c.badges.indexOf("eveille") !== -1){
+          eveille++;
         }
+        if(c.badges.indexOf("agent") !== -1){
+          agent++;
+        }
+        if(c.badges.indexOf("one") !== -1){
+          elu++;
+        }
+        today = new Date();
         const visitCandidatDate = new Date(c.createdAt);
         const days = (today.getTime() - visitCandidatDate.getTime())/1000/3600/24;
         if(days < 1){
@@ -60,7 +82,6 @@ export const getDashboard = async (req, res) => {
           }
         }else if(days >= 7 && days < 14){
           today.setDate(today.getDate() - 14)
-          semaines.push(`${today.getDay()}/${today.getMonth()}`)
           if(!visitsDates[`${today.getDay()}/${today.getMonth()}`]){
             visitsDates[`${today.getDay()}/${today.getMonth()}`] = 1;
           }else {
@@ -96,7 +117,6 @@ export const getDashboard = async (req, res) => {
           }
         }else if(days >= 42 && days < 49){
           today.setDate(today.getDate() - 49);
-          semaines.push(`${today.getDay()}/${today.getMonth()}`)
           if(!visitsDates[`${today.getDay()}/${today.getMonth()}`]){
             visitsDates[`${today.getDay()}/${today.getMonth()}`] = 1;
           }else {
@@ -136,13 +156,15 @@ export const getDashboard = async (req, res) => {
       res.render("pages/dashboard", {
         enigmes: enigmes, 
         candidats: candidats, 
-        candidatsFinal: candidatsFinal, 
         visitsDates: visitsDates,
         days: days,
-        semaines: semaines
+        semaines: semaines,
+        eveille: eveille,
+        agent: agent,
+        elu: elu
       });
     }catch(e){
       console.log(e)
       res.status(500).json(e);
     }
-  }
+}

@@ -68,6 +68,12 @@ function checkSpyElimination(mutation) {
 
 async function checkParticularity(stepData, req, ret) {
   const prompt = req.body.prompt ? req.body.prompt.toLowerCase() : null;
+  if(!req.app.locals.baseURL.contains('localhost')){
+    let user = await findUserByIp(req.socket.remoteAddress);
+  }else {
+    let user = [];
+    user.push({});
+  }
   switch (stepData.name) {
     case "begin":
       if (["non", "no"].includes(prompt)) {
@@ -101,17 +107,22 @@ async function checkParticularity(stepData, req, ret) {
       break;
     case "eveille":
     case "agent":
+      if(!req.app.locals.baseURL.contains('localhost')){
+        user[0].badges.push(stepData.name);
+        await updateUser(user[0]);
+      }
       if (["bleu", "bleue", "pillule bleue"].includes(prompt) ) {
         ret.goToForm = true
         ret.message = stepData.alternateAnswer
       }
       break;
-    case "one": 
+    case "one":
+      if(!req.app.locals.baseURL.contains('localhost')){
+        user[0].badges.push(stepData.name);
+        await updateUser(user[0]);
+      }
       stepData =  data.find(x => x.name === 'endform')
     case "endform":
-      if(!req.app.locals.baseURL.contains('localhost')){
-        let user = await findUserByIp(req.socket.remoteAddress);
-      }
       switch(req.body.try){
         case 1:
           user[0].name = prompt;
@@ -133,8 +144,8 @@ async function checkParticularity(stepData, req, ret) {
       }
       if(!req.app.locals.baseURL.contains('localhost')){
         user[0].mailSend = false;
+        await updateUser(user[0]);
       }
-      await updateUser(user[0]);
 
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
 
