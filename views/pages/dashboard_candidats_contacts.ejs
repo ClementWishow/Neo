@@ -9,11 +9,9 @@
 </head>
 <body>
     <script>
-        let candidats = <%- JSON.stringify(candidats) %>;
         let candidatsFinal = <%- JSON.stringify(candidatsFinal) %>;
     </script>
     <script type="module" src="./public/dashboard.js"></script>
-    <h1 class="text_center">Nombre de candidat allant jusqu'au formulaire des données contact (%): <%= Math.round((candidatsFinal.length / candidats.length) * 100) %>%</h1>
     <h2 class="text_center">Résultats des candidats ayant été jusqu'à la validation des données contact</h2>
     <table>
         <thead>

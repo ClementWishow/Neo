@@ -10,7 +10,6 @@ export const getCandidatsContacts = async (req, res) => {
     }
   });
   res.render("pages/dashboard_candidats_contacts", {
-    candidats: candidats, 
     candidatsFinal: candidatsFinal,
   });
 }
@@ -25,7 +24,11 @@ export const getDashboard = async (req, res) => {
       let eveille = 0;
       let agent = 0;
       let elu = 0;
+      let candidatsFinal = [];
       candidats.forEach(c => {
+        if(c.name){
+          candidatsFinal.push(c);
+        }
         if(c.badges.indexOf("eveille") !== -1){
           eveille++;
         }
@@ -137,12 +140,12 @@ export const getDashboard = async (req, res) => {
       let semaine_6 = new Date()
       semaine_6.setDate(semaine_6.getDate() - 49);
       const semaines = [
-        `${semaine_1.getDate()}/${semaine_1.getMonth()}`,
-        `${semaine_2.getDate()}/${semaine_2.getMonth()}`,
-        `${semaine_3.getDate()}/${semaine_3.getMonth()}`,
-        `${semaine_4.getDate()}/${semaine_4.getMonth()}`,
-        `${semaine_5.getDate()}/${semaine_5.getMonth()}`,
-        `${semaine_6.getDate()}/${semaine_6.getMonth()}`,
+        `${semaine_1.getDate()}/${semaine_1.getMonth()+1}`,
+        `${semaine_2.getDate()}/${semaine_2.getMonth()+1}`,
+        `${semaine_3.getDate()}/${semaine_3.getMonth()+1}`,
+        `${semaine_4.getDate()}/${semaine_4.getMonth()+1}`,
+        `${semaine_5.getDate()}/${semaine_5.getMonth()+1}`,
+        `${semaine_6.getDate()}/${semaine_6.getMonth()+1}`,
       ]
       const days = [ 
         joursSemaine[today.getDay()],
@@ -161,7 +164,8 @@ export const getDashboard = async (req, res) => {
         semaines: semaines,
         eveille: eveille,
         agent: agent,
-        elu: elu
+        elu: elu,
+        candidatsFinal: candidatsFinal,
       });
     }catch(e){
       console.log(e)

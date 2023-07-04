@@ -9,7 +9,7 @@ const trame = JSON.parse(
 
 export const getFirstPage = async (req, res) => {
   try {
-    if(!req.app.locals.baseURL.contains('localhost')){
+    if(!req.app.locals.baseURL.includes('localhost')){
       await createUser(req.socket.remoteAddress)
     }
     const cookie = req.cookies["x-key"]

@@ -68,10 +68,10 @@ function checkSpyElimination(mutation) {
 
 async function checkParticularity(stepData, req, ret) {
   const prompt = req.body.prompt ? req.body.prompt.toLowerCase() : null;
-  if(!req.app.locals.baseURL.contains('localhost')){
-    let user = await findUserByIp(req.socket.remoteAddress);
+  let user = [];
+  if(!req.app.locals.baseURL.includes('localhost')){
+    user = await findUserByIp(req.socket.remoteAddress);
   }else {
-    let user = [];
     user.push({});
   }
   switch (stepData.name) {
@@ -107,7 +107,7 @@ async function checkParticularity(stepData, req, ret) {
       break;
     case "eveille":
     case "agent":
-      if(!req.app.locals.baseURL.contains('localhost')){
+      if(!req.app.locals.baseURL.includes('localhost')){
         user[0].badges.push(stepData.name);
         await updateUser(user[0]);
       }
@@ -117,7 +117,7 @@ async function checkParticularity(stepData, req, ret) {
       }
       break;
     case "one":
-      if(!req.app.locals.baseURL.contains('localhost')){
+      if(!req.app.locals.baseURL.includes('localhost')){
         user[0].badges.push(stepData.name);
         await updateUser(user[0]);
       }
@@ -142,7 +142,7 @@ async function checkParticularity(stepData, req, ret) {
         default:
           break;
       }
-      if(!req.app.locals.baseURL.contains('localhost')){
+      if(!req.app.locals.baseURL.includes('localhost')){
         user[0].mailSend = false;
         await updateUser(user[0]);
       }
@@ -174,8 +174,9 @@ export async function checkEnigma(name, req) {
     cookie: null,
     correct: false,
   };
-  if(!req.app.locals.baseURL.contains('localhost')){
-    let user = await findUserByIp(req.socket.remoteAddress);
+  let user;
+  if(!req.app.locals.baseURL.includes('localhost')){
+    user = await findUserByIp(req.socket.remoteAddress);
   }
 
   // on verifie si la réponse est correcte en la comparant au JSON
@@ -187,13 +188,13 @@ export async function checkEnigma(name, req) {
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {
     ret.redirect = "next";
-    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails' && !req.app.locals.baseURL.contains('localhost')){
+    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails' && !req.app.locals.baseURL.includes('localhost')){
       user[0].enigmesReussies.push(name);
       await updateUser(user[0]);
       await recordEnigmeResult(enigme, name, true);
     }
   }else {
-    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails' && !req.app.locals.baseURL.contains('localhost')){
+    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails' && !req.app.locals.baseURL.includes('localhost')){
       user[0].enigmesFailed.push(name);
       await updateUser(user[0]);
       await recordEnigmeResult(enigme, name, false);
