@@ -10,6 +10,8 @@ const sessionUser = Schema({
   mailSend: Boolean,
   enigmesReussies: [String],
   enigmesFailed: [String],
+  badges: [String],
+  ip: String
 });
 
 sessionUser.set("timestamps", true);

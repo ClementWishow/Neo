@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet"><link rel="stylesheet" href="../../public/dashboard_styles.css">
+    <title>Neo dashboard</title>
+</head>
+<body>
+    <script>
+        let candidatsFinal = <%- JSON.stringify(candidatsFinal) %>;
+    </script>
+    <script type="module" src="./public/dashboard.js"></script>
+    <h2 class="text_center">Résultats des candidats ayant été jusqu'à la validation des données contact</h2>
+    <table>
+        <thead>
+            <th>Nom/Prenom (ou Prenom/Nom)</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Stack technique</th>
+            <th>Rémunération souhaitée</th>
+            <th>Enigmes réussies</th>
+            <th>Enigmes échouées</th>
+        </thead>
+        <tbody>
+            <% for(var i=0; i < candidatsFinal.length; i++) { %>
+                <tr>
+                  <td><%= candidatsFinal[i].name %></td>
+                  <td><%= candidatsFinal[i].email %></td>
+                  <td><%= candidatsFinal[i].tel %></td>
+                  <td><%= candidatsFinal[i].stack %></td>
+                  <td><%= candidatsFinal[i].remuneration %></td>
+                  <td>
+                      <% for(var r=0; r < candidatsFinal[i].enigmesReussies.length; r++) { %>
+                        <%= candidatsFinal[i].enigmesReussies[r] %>
+                      <% } %>
+                  </td>
+                  <td>
+                      <% for(var f=0; f < candidatsFinal[i].enigmesFailed.length; f++) { %>
+                        <%= candidatsFinal[i].enigmesFailed[f] %>
+                      <% } %>
+                  </td>
+                </tr>
+             <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet"><link rel="stylesheet" href="../../public/dashboard_styles.css">
+    <title>Neo dashboard</title>
+</head>
+<body>
+    <script>
+        let enigmes = <%- JSON.stringify(enigmes) %>;
+        let candidats = <%- JSON.stringify(candidats) %>;
+        let candidatsFinal = <%- JSON.stringify(candidatsFinal) %>;
+        let visitsDates = <%- JSON.stringify(visitsDates) %>;
+        let days = <%- JSON.stringify(days) %>;
+        let semaines = <%- JSON.stringify(semaines) %>;
+        let eveille = <%- JSON.stringify(eveille) %>;
+        let agent = <%- JSON.stringify(agent) %>;
+        let elu = <%- JSON.stringify(elu) %>;
+        </script>
+    <script type="module" src="./public/dashboard.js"></script>
+    <button id="delete">Supprimer le cas de test local</button>
+    <h1 class="text_center">Nombre total de candidat : <%= candidats.length %></h1>
+    <h2 class="text_center">Visites au cours des derniers jours</h2>
+    <table class="margin_auto">
+        <thead>
+            <% for(var i=0; i < days.length; i++) { %>
+                <th class="jour"><%= days[i] %></th>
+             <% } %>
+        </thead>
+        <tbody>
+            <tr>
+                <% for(var i=0; i < days.length; i++) { %>
+                    <td class="jour"><%= visitsDates[days[i]] > 0 ? visitsDates[days[i]] : 0 %></td>
+                 <% } %>
+            </tr>
+        </tbody>
+    </table>
+    <h2 class="text_center">Visites au cours des dernières semaines</h2>
+    <table class="margin_auto">
+        <thead>
+            <% for(var i=0; i < semaines.length; i++) { %>
+                <th class="semaine">semaine du <%= semaines[i] %></th>
+             <% } %>
+        </thead>
+        <tbody>
+            <tr>
+                <% for(var i=0; i < semaines.length; i++) { %>
+                    <td class="semaine"><%= visitsDates[semaines[i]] > 0 ? visitsDates[semaines[i]] : 0 %></td>
+                 <% } %>
+            </tr>
+        </tbody>
+    </table>
+    <h2 class="text_center">Pourcentages des étapes</h2>
+    <table class="margin_auto">
+        <thead>
+            <th>badge eveillé</th>
+            <th>badge agent</th>
+            <th>badge elu</th>
+            <th>candidats ayant renseigné leurs données contact</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="semaine"><%= Math.round((eveille / candidats.length) * 100)%>%</td>
+                <td class="semaine"><%= Math.round((agent / candidats.length) * 100)%>%</td>
+                <td class="semaine"><%= Math.round((elu / candidats.length) * 100)%>%</td>
+                <td class="semaine"><%= Math.round((candidatsFinal.length / candidats.length) * 100) %>%</td>        
+            </tr>
+        </tbody>
+    </table>
+    <h2 class="text_center">Taux de réussite/échec aux énigmes</h2>
+    <table class="margin_auto">
+        <thead>
+            <th>Enigme</th>
+            <th>Réussite(s)</th>
+            <th>Echec(s)</th>
+            <th>Essais total</th>
+        </thead>
+        <tbody>
+            <% for(var i=0; i < enigmes.length; i++) { %>
+                <tr>
+                    <td><%= enigmes[i].name %></td>
+                    <td><%= Math.round((enigmes[i].numberReussie / (enigmes[i].numberReussie + enigmes[i].numberFailed)) * 100) %>%</td>
+                    <td><%= Math.round((enigmes[i].numberFailed / (enigmes[i].numberReussie + enigmes[i].numberFailed)) * 100) %>%</td>
+                    <td><%= enigmes[i].numberReussie+enigmes[i].numberFailed %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

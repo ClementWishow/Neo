@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 import { getEnigmaData, checkEnigma, createEnigmaPath } from "../utils/enigmaManager.js";
 import { encrypt, decrypt } from "../utils/encryptManager.js";
+import { createUser } from "../queries/sessionUser.queries.js";
 
 const trame = JSON.parse(
   await readFile(new URL("../trame.json", import.meta.url))
@@ -8,6 +9,9 @@ const trame = JSON.parse(
 
 export const getFirstPage = async (req, res) => {
   try {
+    if(!req.app.locals.baseURL.includes('localhost')){
+      await createUser(req.socket.remoteAddress)
+    }
     const cookie = req.cookies["x-key"]
     let stepName = 'begin';
     if (!cookie) {
@@ -33,9 +37,6 @@ export const checkQuestions = async (req, res) => {
     redirect: result.redirect,
   }
 
-  if (result.cookie) {
-    res.cookie('x-id', result.cookie)
-  }
   // si la reponse est correcte, on ajoute un cookie correspondant à l'etape dans la réponse
   if (result.redirect === 'next') {
     steps.shift()

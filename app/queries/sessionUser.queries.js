@@ -1,13 +1,17 @@
 import sessionUser from "../models/sessionUser.js";
 
-export const createUser = (userName) => {
+export const createUser = (ip) => {
   return new sessionUser({
-    name: userName
+    ip: ip
   }).save();
 };
 
 export const findUserById = (id) => {
     return sessionUser.findById(id).exec();
+}
+
+export const findUserByIp = (ip) => {
+    return sessionUser.find({ ip: ip}).exec();
 }
 
 export const updateUser = (user) => {
@@ -16,4 +20,12 @@ export const updateUser = (user) => {
 
 export const getAllUsersToSendToRh = () => {
     return sessionUser.find({ mailSend: false }).exec();
+}
+
+export const getAllCandidats = () => {
+  return sessionUser.find({}).exec();
+}
+
+export const deleteLocalIp = (ip) => {
+  return sessionUser.deleteOne({ ip: ip}).exec();
 }
