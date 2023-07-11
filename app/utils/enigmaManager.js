@@ -179,6 +179,9 @@ export async function checkEnigma(name, req) {
     user = await findUserByIp(req.socket.remoteAddress);
   }
 
+  if (req.body.mutation && !stepData.checkMutations) {
+    return ret
+  }
   // on verifie si la réponse est correcte en la comparant au JSON
   ret.correct = stepData.answer.includes(prompt);
   // gestion des cas particuliers propres à chaque etapes

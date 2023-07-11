@@ -7,7 +7,7 @@ export default class TypeWriter {
 		this.afterLineDelay = 1000;
 		this.noTyping = false
 		this.blockedLetter = null
-		this.canPrompt = true
+		this.canPrompt = false
 		this.prompting = false
 		this.promptNumber = 0
 		this.speed = false
@@ -15,7 +15,7 @@ export default class TypeWriter {
 	}
 
 	// ajoute un retour à la ligne
-	appendTypeWriterItem() {
+	async appendTypeWriterItem() {
 		this.selector.append("<span class='typewriter-item'>")
 	}
 
@@ -56,7 +56,7 @@ export default class TypeWriter {
 		await this.typeIt(lines[0]);
 		
 		for (var i = 1; i < lines.length; i++) {
-			this.prompting = true			
+			this.prompting = true
 			this.appendTypeWriterItem();
 			if (!this.speed) {
 				await this.sleep(this.afterLineDelay)
@@ -74,20 +74,21 @@ export default class TypeWriter {
 		this.selector[0].replaceChildren();
 		this.canPrompt = true
 	}
+	async speedUp() {
+		if (this.speed) {
+			return
+		}
+		this.speed = true
+		await this.sleep(1000)
+		this.speed = false
+	}
 
 	// gestion du prompt de l'utilisateur
 	prompt(input) {
-		if (input.toLowerCase() === this.blockedLetter) {
-			input = ' '
-		}
 		if (input === "Enter") {
-			if (this.prompting) {
-				this.speed = true
-				const that = this
-				setTimeout(function() {
-					that.speed = false
-				}, 1000);
-
+			if (this.prompting) 
+			{
+				this.speedUp()
 			}
 			else if (this.canPrompt) {
 				const currentElem = $(this.elmt + ' span.typewriter-item:last-child')[0]
@@ -105,6 +106,9 @@ export default class TypeWriter {
 			}
 		}
 		else if (this.canPrompt && !this.prompting && !this.noTyping) {
+			if (input.toLowerCase() === this.blockedLetter) {
+				input = ' '
+			}
 			if (input &&  $(this.elmt + ' span.typewriter-item:last-child')) {
 				var currentPrompt = $(this.elmt + ' span.typewriter-item:last-child')[0].innerText
                 if (input === "Backspace" ) {

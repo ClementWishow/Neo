@@ -5,8 +5,8 @@
                 "Réveille toi Néo.",
                 "Tu es dans la matrice.",
                 "Tu la sens tous les jours... tout autour de toi...",
-		        "Tu la sens quand on t'envoie des offres d'emplois qui ne te concernent pas.",
-		        "Tu la sens quand on te demande d'accepter des missions où tu n'as pas la possibilité d'exprimer tout ton plein potentiel.",
+		        "Tu la sens quand on t'envoie des offres d'emploi qui ne te concernent pas.",
+		        "Tu la sens quand on te demande d'accepter des missions où tu n'as pas la possibilité d'exprimer tout ton potentiel.",
                 "Veux tu te liberer Néo ?",
                 "Veux tu savoir pourquoi tu es là ?"
 
@@ -23,8 +23,8 @@
             "initialLines": [
                 "Bien Joué. En répondant à ces premieres questions, tu obtiens le premier badge :<div style='color: red'>Eveillé</div>",
                 "Je te propose maintenant deux choix.",
-                "la pillule bleue - Le savoir : Laisse tes coordonnées pour qu'un membre de notre equipe te contacte et t'en dise plus.",
-                "la pillule rouge - Le défi : Continue le challenge et suis le lapin blanc."
+                "la pilule bleue - Le savoir : Laisse tes coordonnées pour qu'un membre de notre equipe te contacte et t'en dise plus.",
+                "la pilule rouge - Le défi : Continue le challenge et suis le lapin blanc."
             ],
             "answer": ["pillule bleue", "pillule rouge", "bleu", "bleue", "rouge"],
             "wrongAnswer": "Je n'ai pas compris (bleu ou rouge).",
@@ -35,10 +35,10 @@
         {
             "name": "agent",
             "initialLines": [
-                "Tu m'impressiones. Tu as obtenu le second badge :<div style='color: red'>Agent</div>",
+                "Tu m'impressionnes. Tu as obtenu le second badge :<div style='color: red'>Agent</div>",
                 "Le choix reste le même.",
-                "la pillule bleue - Le savoir : Laisse tes coordonnées pour qu'un membre de notre equipe te contacte et t'en dise plus.",
-                "la pillule rouge - Le défi : Continue le challenge et suis le lapin blanc."
+                "la pilule bleue - Le savoir : Laisse tes coordonnées pour qu'un membre de notre equipe te contacte et t'en dise plus.",
+                "la pilule rouge - Le défi : Continue le challenge et suis le lapin blanc."
             ],
             "answer": ["pillule bleue", "pillule rouge", "bleu", "bleue", "rouge"],
             "wrongAnswer": "Je n'ai pas compris (bleu ou rouge).",
@@ -49,8 +49,8 @@
         {
             "name": "one",
             "initialLines": [
-                "Tu as surmonté toutes les epreuves. Voici le dernier badge :<div style='color: red'>Elu</div>",
-                "Il ne te reste plus qu'une chose à faire: Ecrire tes coordonéées pour que nous puissions rentrer en contact avec toi.",
+                "Tu as surmonté toutes les épreuves. Voici le dernier badge :<div style='color: red'>Élu</div>",
+                "Il ne te reste plus qu'une chose à faire: Écrire tes coordonées pour que nous puissions entrer en contact avec toi.",
                 "Nom et Prénom :"
             ],
             "answer": []
@@ -58,7 +58,7 @@
         {
             "name": "endform",
             "initialLines": [
-                "Ecris donc tes coordonéées pour que nous puissions rentrer en contact avec toi.",
+                "Ecris donc tes coordonéées pour que nous puissions entrer en contact avec toi.",
                 "Nom et Prénom :"
             ],
             "answer": [],
@@ -108,7 +108,7 @@
         {
             "name": "devinette-2",
             "initialLines": [
-                "Je suis un puits de connaissance qui ne cesse d'apprendre chaque jour.",
+                "Je suis un puit de connaissance qui ne cesse d'apprendre chaque jour.",
                 "Je peux partager mon savoir mais il peut s'avérer compliqué de communiquer avec moi",
                 "Les plus grands peuvent utiliser mon savoir pour devenir très riche.",
                 "On peut me structurer, me migrer, m'effacer,",
@@ -147,7 +147,8 @@
             "goodAnswer": "Bravo, et bien vu.",
             "noTyping": true,
             "additionalHTML": "app/utils/enigmaFiles/spy.html",
-            "tag": "medium"
+            "tag": "medium",
+            "checkMutations": true
         },
         {
             "name": "addition",
@@ -170,7 +171,7 @@
                 "Faisons connaissance !",
                 "Est ce que je t'ai dit que j'aimais beaucoup le jaune ?",
                 "Bref. Passons à la question.",
-                "À ton avis, quelle est ma couleur preferé ? (j'adore le jaune)"
+                "À ton avis, quelle est ma couleur preferée ? (j'adore le jaune)"
             ],
             "answer": ["jaune", "yellow"],
             "wrongAnswer": "Non ce n'est pas le vert que j'aime, c'est le jaune.",
