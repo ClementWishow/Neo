@@ -68,12 +68,6 @@ function checkSpyElimination(mutation) {
 
 async function checkParticularity(stepData, req, ret) {
   const prompt = req.body.prompt ? req.body.prompt.toLowerCase() : null;
-  let user = [];
-  if(!req.app.locals.baseURL.includes('localhost')){
-    user = await findUserByIp(req.socket.remoteAddress);
-  }else {
-    user.push({});
-  }
   switch (stepData.name) {
     case "begin":
       if (["non", "no"].includes(prompt)) {
@@ -107,44 +101,38 @@ async function checkParticularity(stepData, req, ret) {
       break;
     case "eveille":
     case "agent":
-      if(!req.app.locals.baseURL.includes('localhost')){
-        user[0].badges.push(stepData.name);
-        await updateUser(user[0]);
-      }
       if (["bleu", "bleue", "pillule bleue"].includes(prompt) ) {
         ret.goToForm = true
         ret.message = stepData.alternateAnswer
       }
       break;
     case "one":
-      if(!req.app.locals.baseURL.includes('localhost')){
-        user[0].badges.push(stepData.name);
-        await updateUser(user[0]);
-      }
       stepData =  data.find(x => x.name === 'endform')
     case "endform":
-      switch(req.body.try){
-        case 1:
-          user[0].name = prompt;
-          break;
-        case 2:
-          user[0].email = prompt;
-          break;
-        case 3:
-          user[0].stack = prompt;
-          break;
-        case 4:
-          user[0].tel = prompt;
-          break;
-        case 5:
-          user[0].remuneration = prompt;
-          break;
-        default:
-          break;
-      }
       if(!req.app.locals.baseURL.includes('localhost')){
-        user[0].mailSend = false;
-        await updateUser(user[0]);
+        let user = await findUserByIp(req.socket.remoteAddress);
+        if (user.length > 0) {
+          switch(req.body.try){
+            case 1:
+              user[0].name = prompt;
+              break;
+            case 2:
+              user[0].email = prompt;
+              break;
+            case 3:
+              user[0].stack = prompt;
+              break;
+            case 4:
+              user[0].tel = prompt;
+              break;
+            case 5:
+              user[0].remuneration = prompt;
+              break;
+            default:
+              break;
+          }
+          await updateUser(user[0]);
+        }
       }
 
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
@@ -174,10 +162,6 @@ export async function checkEnigma(name, req) {
     cookie: null,
     correct: false,
   };
-  let user;
-  if(!req.app.locals.baseURL.includes('localhost')){
-    user = await findUserByIp(req.socket.remoteAddress);
-  }
 
   if (req.body.mutation && !stepData.checkMutations) {
     return ret
@@ -186,22 +170,10 @@ export async function checkEnigma(name, req) {
   ret.correct = stepData.answer.includes(prompt);
   // gestion des cas particuliers propres à chaque etapes
   ret = await checkParticularity(stepData, req, ret);
-  const enigme = await findEnigme(name);
 
   // si la reponse est correcte , on renvoie une redirection vers l'etape suivante
   if (!ret.redirect && ret.correct) {
     ret.redirect = "next";
-    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails' && !req.app.locals.baseURL.includes('localhost')){
-      user[0].enigmesReussies.push(name);
-      await updateUser(user[0]);
-      await recordEnigmeResult(enigme, name, true);
-    }
-  }else {
-    if(name !== 'endform' && name !== 'firstFiveFails' && name !== 'lastThreeFails' && !req.app.locals.baseURL.includes('localhost')){
-      user[0].enigmesFailed.push(name);
-      await updateUser(user[0]);
-      await recordEnigmeResult(enigme, name, false);
-    }
   }
   // on renvoie le texte à affiché en cherchant dans le JSON
   if (!ret.message && !req.body.mutation) {
@@ -211,17 +183,4 @@ export async function checkEnigma(name, req) {
     }
   }
   return ret;
-}
-
-async function recordEnigmeResult(enigme, name, result) {
-  if(enigme.length > 0){
-    if(result){
-      enigme[0].numberReussie++
-    }else {
-      enigme[0].numberFailed++
-    }
-    await updateEnigmeTracking(enigme[0])
-  }else {
-    await createEnigmeTracking(name, result);
-  }
 }

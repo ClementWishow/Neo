@@ -8,9 +8,8 @@ const sessionUser = Schema({
   stack: String,
   remuneration: String,
   mailSend: Boolean,
-  enigmesReussies: [String],
-  enigmesFailed: [String],
-  badges: [String],
+  initialPath: String,
+  path: [String],
   ip: String
 });
 

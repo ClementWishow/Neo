@@ -1,10 +1,14 @@
 import sessionUser from "../models/sessionUser.js";
 
-export const createUser = (ip) => {
+
+export const createUser = (ip, path) => {
   return new sessionUser({
-    ip: ip
+    ip: ip,
+    initialPath: path.join(";"),
+    path: [path[0]]
   }).save();
 };
+
 
 export const findUserById = (id) => {
     return sessionUser.findById(id).exec();
