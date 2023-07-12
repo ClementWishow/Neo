@@ -18,6 +18,7 @@
         let eveille = <%- JSON.stringify(eveille) %>;
         let agent = <%- JSON.stringify(agent) %>;
         let elu = <%- JSON.stringify(elu) %>;
+        let tauxMoyensEchecs = <%- JSON.stringify(tauxMoyensEchecs) %>;
         </script>
     <script type="module" src="./public/dashboard.js"></script>
     <button id="delete">Supprimer le cas de test local</button>
@@ -73,17 +74,15 @@
     <table class="margin_auto">
         <thead>
             <th>Enigme</th>
-            <th>Réussite(s)</th>
-            <th>Echec(s)</th>
-            <th>Essais total</th>
+            <th>Taux moyen d'échec</th>
+            <th>Nombre de candidats</th>
         </thead>
         <tbody>
             <% for(var i=0; i < enigmes.length; i++) { %>
                 <tr>
-                    <td><%= enigmes[i].name %></td>
-                    <td><%= Math.round((enigmes[i].numberReussie / (enigmes[i].numberReussie + enigmes[i].numberFailed)) * 100) %>%</td>
-                    <td><%= Math.round((enigmes[i].numberFailed / (enigmes[i].numberReussie + enigmes[i].numberFailed)) * 100) %>%</td>
-                    <td><%= enigmes[i].numberReussie+enigmes[i].numberFailed %></td>
+                    <td><%= enigmes[i] %></td>
+                    <td><%= tauxMoyensEchecs[enigmes[i]] ? `${Math.round(tauxMoyensEchecs[enigmes[i]].tauxMoyen)}%` : 'NA'%></td>
+                    <td><%= tauxMoyensEchecs[enigmes[i]] ? tauxMoyensEchecs[enigmes[i]].nbCandidats : 'NA'%></td>
                 </tr>
             <% } %>
         </tbody>

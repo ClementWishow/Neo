@@ -1,5 +1,6 @@
 import { findAllEnigmes } from "../queries/enigmeTracking.queries.js";
 import { getAllCandidats } from "../queries/sessionUser.queries.js";
+import { getEnigmes } from "../utils/enigmaManager.js";
 
 export const getCandidatsContacts = async (req, res) => {
   const candidats = await getAllCandidats();
@@ -9,14 +10,19 @@ export const getCandidatsContacts = async (req, res) => {
       candidatsFinal.push(c);
     }
   });
-  res.render("pages/dashboard_candidats_contacts", {
-    candidatsFinal: candidatsFinal,
-  });
+  if(candidatsFinal.length === 0){
+    res.render("pages/dashboard_candidats_none");
+  }else {
+    res.render("pages/dashboard_candidats_contacts", {
+      candidatsFinal: candidatsFinal,
+    });
+  }
 }
 
 export const getDashboard = async (req, res) => {
     try {
-      const enigmes = await findAllEnigmes();
+      const enigmes = getEnigmes();
+      let tauxMoyensEchecs = {};
       const candidats = await getAllCandidats();
       let visitsDates = {}
       const joursSemaine = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
@@ -29,15 +35,46 @@ export const getDashboard = async (req, res) => {
         if(c.name){
           candidatsFinal.push(c);
         }
-        if(c.badges.indexOf("eveille") !== -1){
+        if(c.path.indexOf("eveille") !== -1){
           eveille++;
         }
-        if(c.badges.indexOf("agent") !== -1){
+        if(c.path.indexOf("agent") !== -1){
           agent++;
         }
-        if(c.badges.indexOf("one") !== -1){
+        if(c.path.indexOf("one") !== -1){
           elu++;
         }
+        enigmes.forEach(e => {
+          let echecs = 0;
+          let success = 0;
+          c.path.forEach(step => {
+            if(step === `${e}-failed`){
+              echecs++;
+            }
+            if(step === `${e}-success`){
+              success++;
+            }
+          });
+          if(echecs + success > 0){
+            if(!tauxMoyensEchecs[e]){
+              tauxMoyensEchecs[e] = {};
+              tauxMoyensEchecs[e].nbCandidats = 1;
+              tauxMoyensEchecs[e].tauxEchecs = [];
+              tauxMoyensEchecs[e].tauxEchecs.push((echecs/(echecs + success))*100);
+            }else {
+              tauxMoyensEchecs[e].nbCandidats++;
+              tauxMoyensEchecs[e].tauxEchecs.push((echecs/(echecs + success))*100);
+            }
+          }
+          if(tauxMoyensEchecs[e]){
+            let somme = 0;
+            tauxMoyensEchecs[e].tauxEchecs.forEach(t => {
+              somme += t;
+            });
+            tauxMoyensEchecs[e].tauxMoyen = somme/tauxMoyensEchecs[e].nbCandidats;
+          }
+        });
+        console.log(tauxMoyensEchecs)
         today = new Date();
         const visitCandidatDate = new Date(c.createdAt);
         const days = (today.getTime() - visitCandidatDate.getTime())/1000/3600/24;
@@ -157,7 +194,8 @@ export const getDashboard = async (req, res) => {
         today.getDay()-6 < 0 ? joursSemaine[7 + (today.getDay()-6)] : joursSemaine[today.getDay()-6]
       ]
       res.render("pages/dashboard", {
-        enigmes: enigmes, 
+        enigmes: enigmes,
+        tauxMoyensEchecs: tauxMoyensEchecs,
         candidats: candidats, 
         visitsDates: visitsDates,
         days: days,

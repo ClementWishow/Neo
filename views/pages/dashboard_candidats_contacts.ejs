@@ -20,8 +20,8 @@
             <th>Téléphone</th>
             <th>Stack technique</th>
             <th>Rémunération souhaitée</th>
-            <th>Enigmes réussies</th>
-            <th>Enigmes échouées</th>
+            <th>initialPath</th>
+            <th>Path</th>
         </thead>
         <tbody>
             <% for(var i=0; i < candidatsFinal.length; i++) { %>
@@ -31,14 +31,10 @@
                   <td><%= candidatsFinal[i].tel %></td>
                   <td><%= candidatsFinal[i].stack %></td>
                   <td><%= candidatsFinal[i].remuneration %></td>
+                  <td><%= candidatsFinal[i].initialPath %></td>
                   <td>
-                      <% for(var r=0; r < candidatsFinal[i].enigmesReussies.length; r++) { %>
-                        <%= candidatsFinal[i].enigmesReussies[r] %>
-                      <% } %>
-                  </td>
-                  <td>
-                      <% for(var f=0; f < candidatsFinal[i].enigmesFailed.length; f++) { %>
-                        <%= candidatsFinal[i].enigmesFailed[f] %>
+                      <% for(var f=0; f < candidatsFinal[i].path.length; f++) { %>
+                        <%= candidatsFinal[i].path[f] %>
                       <% } %>
                   </td>
                 </tr>

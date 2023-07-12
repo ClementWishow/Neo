@@ -22,7 +22,9 @@ export function createEnigmaPath() {
   return ['begin', ...easy, ...guess,'eveille', ...medium, 'agent', ...hard, 'one']
 }
 
-
+export function getEnigmes() {
+  return data.filter(x => ["begin", "eveille", "agent", "one", "endform"].indexOf(x.name) === -1).map(x => x.name);
+}
 
 export function getEnigmaData(name) {
   const enigma = data.find(x => x.name === name)
@@ -109,30 +111,29 @@ async function checkParticularity(stepData, req, ret) {
     case "one":
       stepData =  data.find(x => x.name === 'endform')
     case "endform":
-      if(!req.app.locals.baseURL.includes('localhost')){
-        let user = await findUserByIp(req.socket.remoteAddress);
-        if (user.length > 0) {
-          switch(req.body.try){
-            case 1:
-              user[0].name = prompt;
-              break;
-            case 2:
-              user[0].email = prompt;
-              break;
-            case 3:
-              user[0].stack = prompt;
-              break;
-            case 4:
-              user[0].tel = prompt;
-              break;
-            case 5:
-              user[0].remuneration = prompt;
-              break;
-            default:
-              break;
-          }
-          await updateUser(user[0]);
+      let user = await findUserByIp(req.socket.remoteAddress);
+      if (user.length > 0) {
+        switch(req.body.try){
+          case 1:
+            user[user.length - 1].name = prompt;
+            break;
+          case 2:
+            user[user.length - 1].email = prompt;
+            user[user.length - 1].mailSend = false;
+            break;
+          case 3:
+            user[user.length - 1].stack = prompt;
+            break;
+          case 4:
+            user[user.length - 1].tel = prompt;
+            break;
+          case 5:
+            user[user.length - 1].remuneration = prompt;
+            break;
+          default:
+            break;
         }
+        await updateUser(user[user.length - 1]);
       }
 
       ret.message = stepData.alternateAnswer[Math.min(stepData.alternateAnswer.length - 1, req.body.try - 1)]
